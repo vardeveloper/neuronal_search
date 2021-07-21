@@ -1,0 +1,1 @@
+jina[devel,framework,nlp]==2.0.*
