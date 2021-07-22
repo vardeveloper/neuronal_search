@@ -103,12 +103,13 @@ class MyIndexer(Executor):
         q_emb = _ext_A(_norm(a))
         d_emb = _ext_B(_norm(b))
         dists = _cosine(q_emb, d_emb)
-        idx, dist = self._get_sorted_top_k(dists, 1)
+        idx, dist = self._get_sorted_top_k(dists, 3)
         for _q, _ids, _dists in zip(docs, idx, dist):
             for _id, _dist in zip(_ids, _dists):
-                d = Document(self._docs[int(_id)], copy=True)
-                d.scores['cosine'] = 1 - _dist
-                _q.matches.append(d)
+                if 1 - _dist > 0.4:
+                    d = Document(self._docs[int(_id)], copy=True)
+                    d.scores['cosine'] = 1 - _dist
+                    _q.matches.append(d)
 
     @staticmethod
     def _get_sorted_top_k(
