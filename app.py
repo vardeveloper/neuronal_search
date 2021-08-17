@@ -20,7 +20,7 @@ def _get_flow(args):
             protocol='http',
             port_expose=8000
         ).add(
-            uses=MyTransformer, parallel=2, timeout_ready=6000000
+            uses=MyTransformer, parallel=2, timeout_ready=-1
         ).add(
             uses=MyIndexer, workspace=args.workdir
         )

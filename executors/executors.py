@@ -2,7 +2,7 @@ from typing import Optional, Dict, Tuple
 
 import numpy as np
 import torch
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoTokenizer, MPNetConfig
 
 from jina import Executor, DocumentArray, requests, Document
 from jina.types.arrays.memmap import DocumentArrayMemmap
@@ -33,9 +33,10 @@ class MyTransformer(Executor):
         self.max_length = max_length
         self.acceleration = acceleration
         self.embedding_fn_name = embedding_fn_name
-        self.tokenizer = AutoTokenizer.from_pretrained(self.base_tokenizer_model)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.base_tokenizer_model, cache_dir='auto_tokenizer',
+                                                       config=MPNetConfig())
         self.model = AutoModel.from_pretrained(
-            self.pretrained_model_name_or_path, output_hidden_states=True
+            self.pretrained_model_name_or_path, output_hidden_states=True, cache_dir='auto_model'
         )
         self.model.to(torch.device('cpu'))
 
