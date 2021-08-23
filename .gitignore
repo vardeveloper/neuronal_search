@@ -48,3 +48,9 @@ Thumbs.db
 *.mov
 *.wmv
 
+# project files
+venv
+auto_model
+auto_tokenizer
+.vscode
+*-*-*-*-*

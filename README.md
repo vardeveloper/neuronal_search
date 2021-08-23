@@ -10,6 +10,7 @@ A demo neural search project that uses Jina. Jina is the cloud-native neural sea
 
 ```bash
 pip install -r requirements.txt
+pip install jina[torch,transformers]
 ```
 
 ## Set environment variables
