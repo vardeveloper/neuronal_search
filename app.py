@@ -3,13 +3,45 @@ import os
 
 from pathlib import Path
 
+import jina.helper
 from jina import Flow, Document, DocumentArray
 from jina.importer import ImportExtensions
 from jina.logging.predefined import default_logger
-
 from jina.parsers.helloworld import set_hw_chatbot_parser
+from jina.types.document.generators import from_csv
 
 from executors.executors import MyTransformer, MyIndexer
+
+from pydantic import BaseModel
+import db
+from models import Feedback as Model_Feedback
+
+
+class Feedback(BaseModel):
+    uuid: str
+    qualification: bool = False
+
+
+def extend_rest_function(app):
+    @app.post('/feedback/', tags=['My Extended APIs'])
+    def create_feedback(feedback: Feedback):
+        row = db.session.query(Model_Feedback).where(Model_Feedback.uuid==feedback.uuid).first()
+        if row:
+            return dict(status=False, message='You have already evaluated the answer')
+
+        try:
+            fb = Model_Feedback(
+                feedback.uuid, 
+                feedback.qualification
+            )
+            db.session.add(fb)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, message='Successfully saved message')
+    return app
 
 
 def _get_flow(args):
@@ -51,15 +83,21 @@ def run(args):
         }
     }
 
+    jina.helper.extend_rest_interface = extend_rest_function
     f = _get_flow(args)
 
     # index it!
     with f, open(targets['questions-csv']['filename']) as fp:
-        reader = csv.reader(fp, delimiter=',', quotechar='\'')
+        reader = csv.reader(fp, delimiter=';', quotechar='\'')
+
         f.index(
             DocumentArray(
-                Document(id=data[0], text=data[1][0], tags={'answer': str(data[1][1])}) for data in enumerate(reader)
-            )
+                Document(
+                    id=data[0], 
+                    text=data[1][0], 
+                    tags={'answer': str(data[1][1]), 'business': str(data[1][2]), 'category': str(data[1][3])}) for data in enumerate(reader)
+            ), 
+            show_progress=True
         )
         f.block()
 

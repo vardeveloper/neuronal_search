@@ -54,3 +54,5 @@ auto_model
 auto_tokenizer
 .vscode
 *-*-*-*-*
+data
+tmp_flow.svg

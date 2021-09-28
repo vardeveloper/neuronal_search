@@ -36,3 +36,10 @@ sudo supervisorctl restart jina
 $ ps ax | grep 408004
 $ cat /var/log/jina.out.log
 $ tail -f /var/log/jina.out.log
+
+
+
+sudo chmod -R 777 data/
+sudo chown -R valcantara:valcantara data/
+docker exec -it [container_id] psql -U postgres -W jina_search 
+
