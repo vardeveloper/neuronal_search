@@ -18,7 +18,7 @@ class MyTransformer(Executor):
 
     def __init__(
             self,
-            pretrained_model_name_or_path: str = 'sentence-transformers/paraphrase-multilingual-mpnet-base-v2',
+            pretrained_model_name_or_path: str = 'sentence-transformers/multi-qa-mpnet-base-cos-v1',
             base_tokenizer_model: Optional[str] = None,
             pooling_strategy: str = 'mean',
             layer_index: int = -1,
