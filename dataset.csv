@@ -1,4 +1,4 @@
-BUSINESS,CATEGORY,TOPIC,SUBTOPIC,QUESTION,ANSWER
+business,category,topic,subtopic,question,answer
 CNSC,Chatbot,Procesos de selección,Etapa de inscripción,"Si me inscribo a un proceso de selección, es seguro que me den un empleo?","No, para adquirir el derecho a ser nombrado en una Entidad es necesario superar todas las etapas del proceso de selección y ocupar un lugar de elegibilidad dentro de la lista de elegible."
 CNSC,Chatbot,Procesos de selección,Etapa de Inscripción,Para inscribirme en un Proceso de Selección es necesario realizar algún pago?,"Si, de conformidad con el artículo 9 de la Ley 1033 de 2006, los aspirantes deberán cancelar los costos de participación en las convocatorias que adelante la Comisión Nacional del Servicio Civil."
 CNSC,Chatbot,Procesos de selección,Etapa de Inscripción,Cuál es el valor que debo pagar para participar en una convocatoria?,"Para empleos de los niveles técnico y asistencial: Un salario mínimo legal diario vigente, y para los demás niveles: un día y medio de salario mínimo legal diario vigente. El recaudo lo hará la CNSC o quien esta delegue."
