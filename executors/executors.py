@@ -106,47 +106,51 @@ class MyIndexer(Executor):
 
     @requests(on='/search')
     def search(self, docs: 'DocumentArray', parameters, **kwargs):
+        message_uuid = str(uuid4())
         docs_business = DocumentArray()
         for d in filter(lambda d: d.tags["business"].strip().lower() == parameters['business'].strip().lower(), self._docs):
             docs_business.append(d)
 
-        docs_category = DocumentArray()
-        for d in filter(lambda d: d.tags["category"].strip().lower() == parameters['category'].strip().lower(), docs_business):
-            docs_category.append(d)
+        if docs_business:
+            docs_category = DocumentArray()
+            for d in filter(lambda d: d.tags["category"].strip().lower() == parameters['category'].strip().lower(), docs_business):
+                docs_category.append(d)
 
-        if docs_business and docs_category:
-            message_uuid = str(uuid4())
-            a = np.stack(docs.get_attributes('embedding'))
-            b = np.stack(docs_category.get_attributes('embedding'))
-            q_emb = _ext_A(_norm(a))
-            d_emb = _ext_B(_norm(b))
-            dists = _cosine(q_emb, d_emb)
-            idx, dist = self._get_sorted_top_k(dists, 3)
-            for _q, _ids, _dists in zip(docs, idx, dist):
-                for _id, _dist in zip(_ids, _dists):
-                    if 1 - _dist > 0.4:
-                        d = Document(docs_category[int(_id)], copy=True)
-                        d.scores['cosine'] = 1 - _dist
-                        d.tags['uuid'] = message_uuid
-                        _q.matches.append(d)
+            if docs_category:
+                a = np.stack(docs.get_attributes('embedding'))
+                b = np.stack(docs_category.get_attributes('embedding'))
+                q_emb = _ext_A(_norm(a))
+                d_emb = _ext_B(_norm(b))
+                dists = _cosine(q_emb, d_emb)
+                idx, dist = self._get_sorted_top_k(dists, 3)
+                for _q, _ids, _dists in zip(docs, idx, dist):
+                    for _id, _dist in zip(_ids, _dists):
+                        if 1 - _dist > 0.4:
+                            d = Document(docs_category[int(_id)], copy=True)
+                            d.scores['cosine'] = 1 - _dist
+                            d.tags['uuid'] = message_uuid
+                            d.pop('embedding')
+                            _q.matches.append(d)
 
-            # Log
-            matches = docs.get_attributes('matches')[0][0]
-            answer = matches.tags["answer"].strip()
-            try:
-                log = Log(
-                    message_uuid,
-                    docs.get_attributes('text')[0], 
-                    answer if answer else '', 
-                    parameters['business'].strip().lower(),
-                    parameters['category'].strip().lower(),
-                    parameters['flow_id'].strip(),
-                    parameters['session_id'].strip()
-                )
-                db.session.add(log)
-                db.session.commit()
-            except:
-                db.session.rollback()
+        # Log
+        try:
+            answer = ''
+            if docs.get_attributes('matches')[0]:
+                matches = docs.get_attributes('matches')[0][0]
+                answer = matches.tags["answer"].strip()
+            log = Log(
+                message_uuid,
+                docs.get_attributes('text')[0], 
+                answer, 
+                parameters['business'].strip().lower(),
+                parameters['category'].strip().lower(),
+                parameters['flow_id'].strip(),
+                parameters['session_id'].strip()
+            )
+            db.session.add(log)
+            db.session.commit()
+        except:
+            db.session.rollback()
 
 
     @staticmethod

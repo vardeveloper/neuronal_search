@@ -1,4 +1,3 @@
-import csv
 import os
 
 from pathlib import Path
@@ -88,17 +87,7 @@ def run(args):
 
     # index it!
     with f, open(targets['questions-csv']['filename']) as fp:
-        reader = csv.reader(fp, delimiter=';', quotechar='\'')
-
-        f.index(
-            DocumentArray(
-                Document(
-                    id=data[0], 
-                    text=data[1][0], 
-                    tags={'answer': str(data[1][1]), 'business': str(data[1][2]), 'category': str(data[1][3])}) for data in enumerate(reader)
-            ), 
-            show_progress=True
-        )
+        f.index(from_csv(fp, field_resolver={'question': 'text'}), show_progress=True)
         f.block()
 
 
