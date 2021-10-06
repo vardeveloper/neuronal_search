@@ -82,6 +82,7 @@ if ($path_only == 'search') {
     if (empty($docs['matches'])) {
         echo json_encode(array('status' => false, 'message' => 'No hay coincidencias'));
     } else {
+        $docs['matches'][0]['tags']['answer'] = $docs['matches'][0]['tags']['answer'] . "\n\n¿Deseas realizar otra consulta?";
         echo json_encode($docs['matches'][0]['tags']);
     }
 } else {
