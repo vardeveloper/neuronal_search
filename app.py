@@ -1,4 +1,5 @@
 import os
+import json
 
 from pathlib import Path
 
@@ -22,39 +23,41 @@ class Feedback(BaseModel):
 
 
 def extend_rest_function(app):
-    @app.post('/feedback/', tags=['My Extended APIs'])
+    @app.post("/feedback/", tags=["My Extended APIs"])
     def create_feedback(feedback: Feedback):
-        row = db.session.query(Model_Feedback).where(Model_Feedback.uuid==feedback.uuid).first()
+        row = (
+            db.session.query(Model_Feedback)
+            .where(Model_Feedback.uuid == feedback.uuid)
+            .first()
+        )
         if row:
-            return dict(status=False, message='You have already evaluated the answer')
+            return dict(status=False, message="You have already evaluated the answer")
 
         try:
-            fb = Model_Feedback(
-                feedback.uuid, 
-                feedback.qualification
-            )
+            fb = Model_Feedback(feedback.uuid, feedback.qualification)
             db.session.add(fb)
             db.session.commit()
         except Exception as e:
             db.session.rollback()
             return dict(status=False, message=str(e))
         else:
-            return dict(status=True, message='Successfully saved message')
+            return dict(status=True, message="Successfully saved message")
+
+    @app.get("/categories/", tags=["My Extended APIs"])
+    def get_categories():
+        with open(os.path.join(".", "dataset_tree.json")) as f:
+            data = json.load(f)
+        return dict(status=True, data=data)
+
     return app
 
 
 def _get_flow(args):
     """Ensure the same flow is used in hello world example and system test."""
     return (
-        Flow(
-            cors=True,
-            protocol='http',
-            port_expose=8000
-        ).add(
-            uses=MyTransformer, parallel=2, timeout_ready=-1
-        ).add(
-            uses=MyIndexer, workspace=args.workdir
-        )
+        Flow(cors=True, protocol="http", port_expose=8000)
+        .add(uses=MyTransformer, parallel=2, timeout_ready=-1)
+        .add(uses=MyIndexer, workspace=args.workdir)
     )
 
 
@@ -66,9 +69,9 @@ def run(args):
     Path(args.workdir).mkdir(parents=True, exist_ok=True)
 
     with ImportExtensions(
-            required=True,
-            help_text='this demo requires Pytorch and Transformers to be installed, '
-                      'if you haven\'t, please do `pip install jina[torch,transformers]`',
+        required=True,
+        help_text="this demo requires Pytorch and Transformers to be installed, "
+        "if you haven't, please do `pip install jina[torch,transformers]`",
     ):
         import transformers
         import torch
@@ -76,9 +79,9 @@ def run(args):
         assert [torch, transformers]  #: prevent pycharm auto remove the above line
 
     targets = {
-        'questions-csv': {
+        "questions-csv": {
             # 'url': args.index_data_url,
-            'filename': os.path.join(args.workdir, '../dataset.csv'),
+            "filename": os.path.join(args.workdir, "../dataset.csv"),
         }
     }
 
@@ -86,11 +89,11 @@ def run(args):
     f = _get_flow(args)
 
     # index it!
-    with f, open(targets['questions-csv']['filename']) as fp:
-        f.index(from_csv(fp, field_resolver={'question': 'text'}), show_progress=True)
+    with f, open(targets["questions-csv"]["filename"]) as fp:
+        f.index(from_csv(fp, field_resolver={"question": "text"}), show_progress=True)
         f.block()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = set_hw_chatbot_parser().parse_args()
     run(args)

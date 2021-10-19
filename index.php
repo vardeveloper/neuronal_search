@@ -1,14 +1,16 @@
 <?php
 
+// php -S 127.0.0.1:8080 index.php
+
 ########################
 ### API Intermediate ###
 ########################
 
-$path_only = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$path_only = str_replace("/index.php/", "", $path_only);
-$path_only = str_replace("/", "", $path_only);
-//echo $path_only;
-//echo gettype($path_only);
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$path = str_replace("/index.php/", "", $path);
+$path = str_replace("/", "", $path);
+//echo $path;
+//echo gettype($path);
 //echo PHP_EOL;
 
 
@@ -27,10 +29,10 @@ if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0) {
 $content = trim(file_get_contents('php://input'));
 
 // Attempt to decode the incoming RAW post data from JSON.
-$decoded = json_decode($content, true);
+$data_array = json_decode($content, TRUE);
 
 // If json_decode failed, the JSON is invalid.
-if (!is_array($decoded)) {
+if (!is_array($data_array)) {
     throw new Exception('Received content contained invalid JSON!');
 }
 
@@ -39,10 +41,10 @@ if (!is_array($decoded)) {
 ### API JINA ###
 ################
 
-$url = "http://10.128.0.17:8000/$path_only";
+$url = "http://10.128.0.17:8000/$path";
 $ch = curl_init($url);
 // Setup request to send json via POST.
-$payload = json_encode($decoded);
+$payload = json_encode($data_array);
 // $payload = json_encode( 
 //     array(
 //         "data" => ["Es confiable guardar mi tarjeta"],
@@ -76,14 +78,18 @@ curl_close($ch);
 // header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); 
 header('Content-Type: application/json; charset=utf-8');
 
-if ($path_only == 'search') {
-    $response = json_decode($response, true);
-    $docs = $response['data']['docs'][0];
-    if (empty($docs['matches'])) {
-        echo json_encode(array('status' => false, 'message' => 'No hay coincidencias'));
+if (isset($data_array["parameters"]["origin"]) && $data_array["parameters"]["origin"] == 'chatbot') {
+    if ($path == 'search') {
+        $response = json_decode($response, TRUE);
+        $docs = $response['data']['docs'][0];
+        if (empty($docs['matches'])) {
+            echo json_encode(array('status' => FALSE, 'message' => 'No hay coincidencias'));
+        } else {
+            $docs['matches'][0]['tags']['answer'] = $docs['matches'][0]['tags']['answer'] . "\n\n¿Deseas realizar otra consulta?";
+            echo json_encode($docs['matches'][0]['tags']);
+        }
     } else {
-        $docs['matches'][0]['tags']['answer'] = $docs['matches'][0]['tags']['answer'] . "\n\n¿Deseas realizar otra consulta?";
-        echo json_encode($docs['matches'][0]['tags']);
+        echo $response;
     }
 } else {
     echo $response;

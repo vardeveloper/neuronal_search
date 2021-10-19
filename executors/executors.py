@@ -14,71 +14,74 @@ from models import Log
 
 
 class MyTransformer(Executor):
-    """Transformer executor class """
+    """Transformer executor class"""
 
     def __init__(
-            self,
-            pretrained_model_name_or_path: str = 'sentence-transformers/multi-qa-mpnet-base-cos-v1',
-            base_tokenizer_model: Optional[str] = None,
-            pooling_strategy: str = 'mean',
-            layer_index: int = -1,
-            max_length: Optional[int] = None,
-            acceleration: Optional[str] = None,
-            embedding_fn_name: str = '__call__',
-            *args,
-            **kwargs,
+        self,
+        pretrained_model_name_or_path: str = "sentence-transformers/multi-qa-mpnet-base-cos-v1",
+        base_tokenizer_model: Optional[str] = None,
+        pooling_strategy: str = "mean",
+        layer_index: int = -1,
+        max_length: Optional[int] = None,
+        acceleration: Optional[str] = None,
+        embedding_fn_name: str = "__call__",
+        *args,
+        **kwargs,
     ):
         super().__init__(*args, **kwargs)
         self.pretrained_model_name_or_path = pretrained_model_name_or_path
         self.base_tokenizer_model = (
-                base_tokenizer_model or pretrained_model_name_or_path
+            base_tokenizer_model or pretrained_model_name_or_path
         )
         self.pooling_strategy = pooling_strategy
         self.layer_index = layer_index
         self.max_length = max_length
         self.acceleration = acceleration
         self.embedding_fn_name = embedding_fn_name
-        self.tokenizer = AutoTokenizer.from_pretrained(self.base_tokenizer_model, cache_dir='auto_tokenizer',
-                                                       config=MPNetConfig())
-        self.model = AutoModel.from_pretrained(
-            self.pretrained_model_name_or_path, output_hidden_states=True, cache_dir='auto_model'
+        self.tokenizer = AutoTokenizer.from_pretrained(
+            self.base_tokenizer_model, cache_dir="auto_tokenizer", config=MPNetConfig()
         )
-        self.model.to(torch.device('cpu'))
+        self.model = AutoModel.from_pretrained(
+            self.pretrained_model_name_or_path,
+            output_hidden_states=True,
+            cache_dir="auto_model",
+        )
+        self.model.to(torch.device("cpu"))
 
-    def _compute_embedding(self, hidden_states: 'torch.Tensor', input_tokens: Dict):
+    def _compute_embedding(self, hidden_states: "torch.Tensor", input_tokens: Dict):
         import torch
 
-        fill_vals = {'cls': 0.0, 'mean': 0.0, 'max': -np.inf, 'min': np.inf}
+        fill_vals = {"cls": 0.0, "mean": 0.0, "max": -np.inf, "min": np.inf}
         fill_val = torch.tensor(
-            fill_vals[self.pooling_strategy], device=torch.device('cpu')
+            fill_vals[self.pooling_strategy], device=torch.device("cpu")
         )
 
         layer = hidden_states[self.layer_index]
-        attn_mask = input_tokens['attention_mask'].unsqueeze(-1).expand_as(layer)
+        attn_mask = input_tokens["attention_mask"].unsqueeze(-1).expand_as(layer)
         layer = torch.where(attn_mask.bool(), layer, fill_val)
 
         embeddings = layer.sum(dim=1) / attn_mask.sum(dim=1)
         return embeddings.cpu().numpy()
 
     @requests
-    def encode(self, docs: 'DocumentArray', *args, **kwargs):
+    def encode(self, docs: "DocumentArray", *args, **kwargs):
         import torch
 
         with torch.no_grad():
 
             if not self.tokenizer.pad_token:
-                self.tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+                self.tokenizer.add_special_tokens({"pad_token": "[PAD]"})
                 self.model.resize_token_embeddings(len(self.tokenizer.vocab))
 
             input_tokens = self.tokenizer(
-                docs.get_attributes('content'),
+                docs.get_attributes("content"),
                 max_length=self.max_length,
-                padding='longest',
+                padding="longest",
                 truncation=True,
-                return_tensors='pt',
+                return_tensors="pt",
             )
             input_tokens = {
-                k: v.to(torch.device('cpu')) for k, v in input_tokens.items()
+                k: v.to(torch.device("cpu")) for k, v in input_tokens.items()
             }
 
             outputs = getattr(self.model, self.embedding_fn_name)(**input_tokens)
@@ -92,33 +95,38 @@ class MyTransformer(Executor):
 
 
 class MyIndexer(Executor):
-    """Simple indexer class """
+    """Simple indexer class"""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._docs = DocumentArrayMemmap(self.workspace + '/indexer')
+        self._docs = DocumentArrayMemmap(self.workspace + "/indexer")
 
-
-    @requests(on='/index')
-    def index(self, docs: 'DocumentArray', **kwargs):
+    @requests(on="/index")
+    def index(self, docs: "DocumentArray", **kwargs):
         self._docs.extend(docs)
 
-
-    @requests(on='/search')
-    def search(self, docs: 'DocumentArray', parameters, **kwargs):
+    @requests(on="/search")
+    def search(self, docs: "DocumentArray", parameters, **kwargs):
         message_uuid = str(uuid4())
-        docs_business = DocumentArray()
-        for d in filter(lambda d: d.tags["business"].strip().lower() == parameters['business'].strip().lower(), self._docs):
-            docs_business.append(d)
 
-        if docs_business:
-            docs_category = DocumentArray()
-            for d in filter(lambda d: d.tags["category"].strip().lower() == parameters['category'].strip().lower(), docs_business):
-                docs_category.append(d)
+        if "business" in parameters:
+            docs_business = DocumentArray()
+            for d in filter(lambda d: d.tags["business"].strip().lower() == parameters["business"].strip().lower(), self._docs):
+                docs_business.append(d)
 
-            if docs_category:
-                a = np.stack(docs.get_attributes('embedding'))
-                b = np.stack(docs_category.get_attributes('embedding'))
+            if docs_business:
+                docs_filter = docs_business
+
+                if "category" in parameters:
+                    docs_category = DocumentArray()
+                    for d in filter(lambda d: d.tags["category"].strip().lower() == parameters["category"].strip().lower(), docs_business):
+                        docs_category.append(d)
+
+                    if docs_category:
+                        docs_filter = docs_category
+
+                a = np.stack(docs.get_attributes("embedding"))
+                b = np.stack(docs_filter.get_attributes("embedding"))
                 q_emb = _ext_A(_norm(a))
                 d_emb = _ext_B(_norm(b))
                 dists = _cosine(q_emb, d_emb)
@@ -126,37 +134,43 @@ class MyIndexer(Executor):
                 for _q, _ids, _dists in zip(docs, idx, dist):
                     for _id, _dist in zip(_ids, _dists):
                         if 1 - _dist > 0.4:
-                            d = Document(docs_category[int(_id)], copy=True)
-                            d.scores['cosine'] = 1 - _dist
-                            d.tags['uuid'] = message_uuid
-                            d.pop('embedding')
+                            d = Document(docs_filter[int(_id)], copy=True)
+                            d.scores["cosine"] = 1 - _dist
+                            d.tags["uuid"] = message_uuid
+                            d.tags["question"] = d.text
+                            d.pop("embedding")
                             _q.matches.append(d)
 
         # Log
         try:
-            answer = ''
-            if docs.get_attributes('matches')[0]:
-                matches = docs.get_attributes('matches')[0][0]
-                answer = matches.tags["answer"].strip()
+            answer = ""
+            flow_id = 0
+            session_id = 0
+            if docs.get_attributes("matches")[0]:
+                matches = docs.get_attributes("matches")[0][0]
+                answer = matches.tags["answer"]
+            if "flow_id" in parameters:
+                flow_id = parameters["flow_id"]
+                session_id = parameters["session_id"]
             log = Log(
                 message_uuid,
-                docs.get_attributes('text')[0], 
-                answer, 
-                parameters['business'].strip().lower(),
-                parameters['category'].strip().lower(),
-                parameters['flow_id'].strip(),
-                parameters['session_id'].strip()
+                docs.get_attributes("text")[0],
+                answer,
+                parameters.get("business", ''),
+                parameters.get("category", ''),
+                flow_id,
+                session_id,
             )
             db.session.add(log)
             db.session.commit()
-        except:
+        except Exception as e:
+            print("ERROR LOG:", str(e))
             db.session.rollback()
-
 
     @staticmethod
     def _get_sorted_top_k(
-            dist: 'np.array', top_k: int
-    ) -> Tuple['np.ndarray', 'np.ndarray']:
+        dist: "np.array", top_k: int
+    ) -> Tuple["np.ndarray", "np.ndarray"]:
         if top_k >= dist.shape[1]:
             idx = dist.argsort(axis=1)[:, :top_k]
             dist = np.take_along_axis(dist, idx, axis=1)
@@ -177,8 +191,8 @@ def _get_ones(x, y):
 def _ext_A(A):
     nA, dim = A.shape
     A_ext = _get_ones(nA, dim * 3)
-    A_ext[:, dim: 2 * dim] = A
-    A_ext[:, 2 * dim:] = A ** 2
+    A_ext[:, dim : 2 * dim] = A
+    A_ext[:, 2 * dim :] = A ** 2
     return A_ext
 
 
@@ -186,7 +200,7 @@ def _ext_B(B):
     nB, dim = B.shape
     B_ext = _get_ones(dim * 3, nB)
     B_ext[:dim] = (B ** 2).T
-    B_ext[dim: 2 * dim] = -2.0 * B.T
+    B_ext[dim : 2 * dim] = -2.0 * B.T
     del B
     return B_ext
 
