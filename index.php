@@ -28,12 +28,15 @@ if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0) {
 // Receive the RAW post data.
 $content = trim(file_get_contents('php://input'));
 
-// Attempt to decode the incoming RAW post data from JSON.
-$data_array = json_decode($content, TRUE);
+$data_array = array();
+if ($content) {
+    // Attempt to decode the incoming RAW post data from JSON.
+    $data_array = json_decode($content, TRUE);
 
-// If json_decode failed, the JSON is invalid.
-if (!is_array($data_array)) {
-    throw new Exception('Received content contained invalid JSON!');
+    // If json_decode failed, the JSON is invalid.
+    if (!is_array($data_array)) {
+        throw new Exception('Received content contained invalid JSON!');
+    }
 }
 
 
