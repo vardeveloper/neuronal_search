@@ -43,7 +43,7 @@ def extend_rest_function(app):
         else:
             return dict(status=True, message="Successfully saved message")
 
-    @app.get("/categories/", tags=["My Extended APIs"])
+    @app.post("/categories/", tags=["My Extended APIs"])
     def get_categories():
         with open(os.path.join(".", "dataset_tree.json")) as f:
             data = json.load(f)
