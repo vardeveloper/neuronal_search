@@ -50,7 +50,7 @@ def extend_rest_function(app):
         return dict(status=True, data=data)
 
     @app.post("/categories/", tags=["My Extended APIs"])
-    def get_categories():
+    def post_categories():
         with open(os.path.join(".", "categories.json")) as f:
             data = json.load(f)
         return dict(status=True, data=data)
