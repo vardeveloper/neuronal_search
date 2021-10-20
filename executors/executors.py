@@ -138,6 +138,7 @@ class MyIndexer(Executor):
                             d.scores["cosine"] = 1 - _dist
                             d.tags["uuid"] = message_uuid
                             d.tags["question"] = d.text
+                            d.tags["answer_html"] = add_tag_html(d.tags["answer"])
                             d.pop("embedding")
                             _q.matches.append(d)
 
@@ -216,3 +217,13 @@ def _norm(A):
 
 def _cosine(A_norm_ext, B_norm_ext):
     return A_norm_ext.dot(B_norm_ext).clip(min=0) / 2
+
+def add_tag_html(string):
+    import re
+    string = re.sub(r"\s+", " ", string)
+    matches = re.findall(r"http.*?\S+", string)
+    for match in matches:
+        string = re.sub(
+            re.escape(match), f'<a href="%s">%s</a>' % (match, match), string
+        )
+    return string
