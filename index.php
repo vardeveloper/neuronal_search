@@ -52,6 +52,9 @@ header("Access-Control-Allow-Origin: *"); // CORS
 header("Access-Control-Allow-Headers: *"); // CORS
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // CORS
 header('Content-Type: application/json; charset=utf-8');
+if ($path == 'docs') {
+    header('Content-Type: text/html; charset=utf-8');
+}
 
 if (isset($data_array["parameters"]["origin"]) && $data_array["parameters"]["origin"] == 'chatbot') {
     if ($path == 'search') {
