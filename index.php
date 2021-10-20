@@ -10,7 +10,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = str_replace("/index.php/", "", $path);
 $path = str_replace("/", "", $path);
 
-if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST')) {
+if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0) {
     $content = trim(file_get_contents('php://input'));
     $data_array = array();
     if (!empty($content)) {
@@ -26,7 +26,7 @@ if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST')) {
 $url = "http://10.128.0.17:8000/$path";
 $ch = curl_init($url);
 
-if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST')) {
+if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0) {
     $payload = json_encode($data_array);
     curl_setopt($ch, CURLOPT_POST, TRUE);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
