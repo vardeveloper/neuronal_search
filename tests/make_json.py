@@ -64,5 +64,5 @@ def make_json_tree(csvFilePath, jsonFilePath):
 
 if __name__ == "__main__":
     csvFilePath = os.path.join(".", "dataset.csv")
-    jsonFilePath = os.path.join(".", "dataset_tree.json")
+    jsonFilePath = os.path.join(".", "categories.json")
     make_json_tree(csvFilePath, jsonFilePath)
