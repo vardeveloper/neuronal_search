@@ -11,6 +11,7 @@ from jina.types.arrays.memmap import DocumentArrayMemmap
 
 import db
 from models import Log
+from helpers import add_tag_html, add_row_dataset
 
 
 class MyTransformer(Executor):
@@ -104,6 +105,12 @@ class MyIndexer(Executor):
     @requests(on="/index")
     def index(self, docs: "DocumentArray", **kwargs):
         self._docs.extend(docs)
+        add_row_dataset(docs)
+
+    @requests(on="/qa")
+    def index(self, docs: "DocumentArray", **kwargs):
+        self._docs.extend(docs)
+        add_row_dataset(docs)
 
     @requests(on="/search")
     def search(self, docs: "DocumentArray", parameters, **kwargs):
@@ -217,13 +224,3 @@ def _norm(A):
 
 def _cosine(A_norm_ext, B_norm_ext):
     return A_norm_ext.dot(B_norm_ext).clip(min=0) / 2
-
-def add_tag_html(string):
-    import re
-    string = re.sub(r"\s+", " ", string)
-    matches = re.findall(r"http.*?\S+", string)
-    for match in matches:
-        string = re.sub(
-            re.escape(match), f'<a href="%s">%s</a>' % (match, match), string
-        )
-    return string

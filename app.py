@@ -15,11 +15,16 @@ from executors.executors import MyTransformer, MyIndexer
 from pydantic import BaseModel
 import db
 from models import Feedback as Model_Feedback
+from helpers import make_categories_json
 
 
 class Feedback(BaseModel):
     uuid: str
     qualification: bool = False
+
+
+class Category(BaseModel):
+    business: str
 
 
 def extend_rest_function(app):
@@ -43,17 +48,24 @@ def extend_rest_function(app):
         else:
             return dict(status=True, message="Successfully saved message")
 
-    @app.get("/categories/", tags=["My Extended APIs"])
-    def get_categories():
-        with open(os.path.join(".", "categories.json")) as f:
-            data = json.load(f)
-        return dict(status=True, data=data)
-
     @app.post("/categories/", tags=["My Extended APIs"])
-    def post_categories():
-        with open(os.path.join(".", "categories.json")) as f:
-            data = json.load(f)
-        return dict(status=True, data=data)
+    def get_categories(category: Category):
+        path_filename = os.path.join("dataset", category.business.lower() + ".json")
+        if os.path.isfile(path_filename):
+            with open(path_filename) as f:
+                data = json.load(f)
+            return dict(status=True, data=data)
+        return dict(status=False, message="File no exists!")
+
+    @app.post("/categories/generate/", tags=["My Extended APIs"])
+    def generate_categories(category: Category):
+        try:
+            csvFilePath = os.path.join(".", "dataset.csv")
+            make_categories_json(category.business, csvFilePath)
+        except Exception as e:
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, message="Json created successfully")
 
     return app
 
@@ -93,6 +105,11 @@ def run(args):
 
     jina.helper.extend_rest_interface = extend_rest_function
     f = _get_flow(args)
+    f.expose_endpoint('/qa',
+        summary='add document in dataset',
+        tags=['TEST'],
+        methods=['POST']
+    )
 
     # index it!
     with f, open(targets["questions-csv"]["filename"]) as fp:
