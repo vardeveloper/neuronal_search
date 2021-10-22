@@ -57,7 +57,7 @@ def extend_rest_function(app):
             return dict(status=True, data=data)
         return dict(status=False, message="File no exists!")
 
-    @app.post("/categories/generate/", tags=["My Extended APIs"])
+    @app.post("/categories_generate/", tags=["My Extended APIs"])
     def generate_categories(category: Category):
         try:
             csvFilePath = os.path.join(".", "dataset.csv")
