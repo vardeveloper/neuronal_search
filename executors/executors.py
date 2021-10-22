@@ -105,10 +105,9 @@ class MyIndexer(Executor):
     @requests(on="/index")
     def index(self, docs: "DocumentArray", **kwargs):
         self._docs.extend(docs)
-        add_row_dataset(docs)
 
-    @requests(on="/qa")
-    def index(self, docs: "DocumentArray", **kwargs):
+    @requests(on="/index_docs")
+    def index_docs(self, docs: "DocumentArray", **kwargs):
         self._docs.extend(docs)
         add_row_dataset(docs)
 

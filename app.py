@@ -105,9 +105,9 @@ def run(args):
 
     jina.helper.extend_rest_interface = extend_rest_function
     f = _get_flow(args)
-    f.expose_endpoint('/qa',
+    f.expose_endpoint('/index_docs',
         summary='add document in dataset',
-        tags=['TEST'],
+        tags=['APIs'],
         methods=['POST']
     )
 
