@@ -10,52 +10,106 @@ A demo neural search project that uses Jina. Jina is the cloud-native neural sea
 
 ```bash
 pip install -r requirements.txt
-pip install jina[torch,transformers]
 ```
 
 ## Set environment variables
 
-Set env variables like ```JINA_DATA_PATH``` and ```MAX_DOCS```
-For example, relative from the data/ folder:
-EXPORT JINA_DATA_PATH='./data/startrek_tng.csv'
+.
 
 ## Run
 
 | Command                  | Description                  |
 | :---                     | :---                         |
-| ``python app.py index``  | To index files/data          |
-| ``python app.py search`` | To run query on the index    |
-| ``python app.py dryrun`` | Sanity check on the topology |
+| ``python app.py``        | To index files/data          |
 
-## Run as a Docker Container
+## APIs
 
-To build the docker image
+Search
 ```bash
-docker build -t jinaai/hub.app.seekercnsc:0.1.0 .
+curl --request POST 'http://0.0.0.0:8000/search/' --header 'Content-Type: application/json' --data-raw '{"data":["What is Neural Search?"], "parameters": {"business": "CNSC"}}'
 ```
 
-To mount local directory and run:
+Body
 ```bash
-docker run -v "$(pwd)/j:/workspace" jinaai/hub.app.seekercnsc:0.1.0
-``` 
+{
+    "data":["What is Neural Search?"],
+    "parameters": {
+        "business": "CNSC"
+    }
+}
+```
 
-To query
+
+Index Docs
 ```bash
-docker run -p 65481:65481 -e "JINA_PORT=65481" jinaai/hub.app.seekercnsc:0.1.0 search
+curl --request POST 'http://0.0.0.0:8000/index_docs/' --header 'Content-Type: application/json'
 ```
 
-For logging, add to `flows/index.yml`
+Body
+```bash
+{
+    "data":[
+        {
+            "text": "What is Neural Search?",
+            "tags": {
+                "business": "DEVAR", 
+                "category": "TI",
+                "subcategory": "KEOS",
+                "question": "What is Neural Search?",
+                "answer": "The core idea of neural search is to leverage state-of-the-art deep neural networks to build every component of a search system. In short, neural search is deep neural network-powered information retrieval. In academia, it’s often called neural IR."
+            }
+        },
+        {
+            "text": "What is Jina?",
+            "tags": {
+                "question": "What is Jina?",
+                "answer": "Jina🔊 is a neural search framework that empowers anyone to build SOTA and scalable deep learning search applications in minutes.",
+                "business": "VARDEL", 
+                "category": "TI",
+                "subcategory": "KEOS"
+            }
+        }
+    ]
+}
 ```
-with:
-  logserver: true
+
+Feedback
+```bash
+curl --request POST 'http://0.0.0.0:8000/feedback/' --header 'Content-Type: application/json'
 ```
+Body
+```bash
+{
+    "uuid": "8e402293-de3d-492c-b277-275c3f0313ed",
+    "qualification": true
+}
+```
+
+Get Categoies
+```bash
+curl --request POST 'http://0.0.0.0:8000/categories/' --header 'Content-Type: application/json'
+```
+Body
+```bash
+{
+    "business": "CNSC"
+}
+```
+
+Generate Categoies
+```bash
+curl --request POST 'http://0.0.0.0:8000/categories_generate/' --header 'Content-Type: application/json'
+```
+Body
+```bash
+{
+    "business": "CNSC"
+}
+```
+
 ## Note:
-The ```depth_range``` parameter in Flow and Pod YAML can be set according to the requirement of the implementation. This is used for recursive document structure in Jina.
-
-For ranking and scoring in the `My First Jina App`, we use the scorer of the VectorIndexer - our relevancy is the similarity.
+.
 
 ## License
 
 Copyright (c) 2020 luca. All rights reserved.
-
-
