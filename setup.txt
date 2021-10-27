@@ -13,6 +13,9 @@ pip install --upgrade pip
 pip install -r requirements.txt
 pip install jina[torch,transformers]
 
+export JINA_LOG_LEVEL=DEBUG
+python models.py
+python app.py
 
 sudo apt install supervisor
 

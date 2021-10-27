@@ -13,7 +13,7 @@ pip install -r requirements.txt
 ```
 
 ## Set environment variables
-
+export JINA_LOG_LEVEL=DEBUG
 .
 
 ## Run
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## APIs
 
-Search
+**Search**
 ```bash
 curl --request POST 'http://0.0.0.0:8000/search/' --header 'Content-Type: application/json' --data-raw '{"data":["What is Neural Search?"], "parameters": {"business": "CNSC"}}'
 ```
@@ -39,8 +39,7 @@ Body
 }
 ```
 
-
-Index Docs
+**Index Docs**
 ```bash
 curl --request POST 'http://0.0.0.0:8000/index_docs/' --header 'Content-Type: application/json'
 ```
@@ -73,7 +72,7 @@ Body
 }
 ```
 
-Feedback
+**Feedback**
 ```bash
 curl --request POST 'http://0.0.0.0:8000/feedback/' --header 'Content-Type: application/json'
 ```
@@ -85,7 +84,7 @@ Body
 }
 ```
 
-Get Categoies
+**Get Categoies**
 ```bash
 curl --request POST 'http://0.0.0.0:8000/categories/' --header 'Content-Type: application/json'
 ```
@@ -96,7 +95,7 @@ Body
 }
 ```
 
-Generate Categoies
+**Generate Categoies**
 ```bash
 curl --request POST 'http://0.0.0.0:8000/categories_generate/' --header 'Content-Type: application/json'
 ```
