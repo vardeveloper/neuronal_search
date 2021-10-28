@@ -2,6 +2,7 @@ import os
 import json
 
 from pathlib import Path
+from dotenv import load_dotenv
 
 import jina.helper
 from jina import Flow, Document, DocumentArray
@@ -118,5 +119,6 @@ def run(args):
 
 
 if __name__ == "__main__":
+    load_dotenv()
     args = set_hw_chatbot_parser().parse_args()
     run(args)
