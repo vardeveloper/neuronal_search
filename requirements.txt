@@ -1,3 +1,3 @@
-jina[devel,framework,nlp]==2.0.*
+jina[devel]==2.0.*
 jina[torch,transformers]
 psycopg2-binary
