@@ -1,21 +1,25 @@
 sudo apt update && sudo apt upgrade - y
 sudo apt autoremove -y
+sudo apt install python3.8 python3.8-dev python3.8-venv python3-pip python3-setuptools -y
+
 
 ssh-keygen -t rsa -b 4096 -C "vardeveloper@gmail.com"
 cat ~/.ssh/id_rsa.pub
 git clone git@bitbucket.org:724MediaColombia/seeker-jina-lucca.git
 
-sudo apt install python3-pip python3.8-venv -y
+
+sudo -H pip install -r requirements.txt (root) (optional)
 
 python3 -m venv venv
 source venv/bin/activate
-pip install --upgrade pip
+pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-pip install jina[torch,transformers]
-
-export JINA_LOG_LEVEL=DEBUG
 python models.py
 python app.py
+
+
+SUPERVISOR
+==========
 
 sudo apt install supervisor
 
@@ -40,17 +44,20 @@ startsecs = 0
 
 sudo supervisorctl reread
 sudo supervisorctl update
-sudo supervisorctl
-sudo supervisorctl restart jina
+sudo supervisorctl status
+sudo supervisorctl start jina
+sudo supervisorctl tail jina
+sudo supervisorctl stop jina
 
 
-$ ps ax | grep 408004
-$ cat /var/log/jina.out.log
-$ tail -f /var/log/jina.out.log
+ps ax | grep 408004
+cat /var/log/jina.out.log
+tail -f /var/log/jina.out.log
 
 
+DOCKER
+======
 
 sudo chmod -R 777 data/
 sudo chown -R valcantara:valcantara data/
 docker exec -it [container_id] psql -U postgres -W jina_search 
-
