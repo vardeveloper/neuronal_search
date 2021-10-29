@@ -150,24 +150,31 @@ class MyIndexer(Executor):
 
         # Log
         try:
+            question = ""
             answer = ""
-            flow_id = 0
-            session_id = 0
             if docs.get_attributes("matches")[0]:
                 matches = docs.get_attributes("matches")[0][0]
+                question = matches.tags["question"]
                 answer = matches.tags["answer"]
+
+            flow_id = 0
+            session_id = 0
             if "flow_id" in parameters:
                 flow_id = parameters["flow_id"]
                 session_id = parameters["session_id"]
-            log = Log(
-                message_uuid,
-                docs.get_attributes("text")[0],
-                answer,
-                parameters.get("business", ''),
-                parameters.get("category", ''),
-                flow_id,
-                session_id,
-            )
+
+            data = {
+                "uuid": message_uuid,
+                "search": docs.get_attributes("text")[0],
+                "question": question,
+                "answer": answer,
+                "business": parameters.get("business", ''),
+                "category": parameters.get("category", ''),
+                "flow_id": flow_id,
+                "session_id": session_id
+            }
+
+            log = Log(**data)
             db.session.add(log)
             db.session.commit()
         except Exception as e:
