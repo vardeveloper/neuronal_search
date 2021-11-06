@@ -10,7 +10,7 @@ from jina import Executor, DocumentArray, requests, Document
 from jina.types.arrays.memmap import DocumentArrayMemmap
 
 import db
-from models import Log
+from models import Log, QuestionAnswer
 from helpers import add_tag_html, add_row_dataset
 
 
@@ -109,7 +109,16 @@ class MyIndexer(Executor):
     @requests(on="/index_docs")
     def index_docs(self, docs: "DocumentArray", **kwargs):
         self._docs.extend(docs)
-        add_row_dataset(docs)
+        # add_row_dataset(docs)
+
+        for row in docs:
+            try:
+                qa = QuestionAnswer(**row.tags)
+                db.session.add(qa)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                db.session.rollback()
 
     @requests(on="/search")
     def search(self, docs: "DocumentArray", parameters, **kwargs):

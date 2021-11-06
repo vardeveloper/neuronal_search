@@ -50,8 +50,8 @@ def make_categories_json(business, csvFilePath):
 
 def add_row_dataset(docs):
     dataset = os.path.join(".", "dataset.csv")
-    field_names = ['business','category','subcategory', 'question','answer']
-    with open(dataset, 'a') as f:
+    field_names = ["business", "category", "subcategory", "question", "answer"]
+    with open(dataset, "a") as f:
         dictwriter = csv.DictWriter(f, fieldnames=field_names)
         for row in docs:
             dictwriter.writerow(row.tags)
@@ -63,7 +63,9 @@ def add_tag_html(string):
     matches = re.findall(r"http.*?\S+", string)
     for match in matches:
         string = re.sub(
-            re.escape(match), f'<a href="%s" target="_blank">%s</a>' % (match, match), string
+            re.escape(match),
+            f'<a href="%s" target="_blank">%s</a>' % (match, match),
+            string,
         )
     return string
 

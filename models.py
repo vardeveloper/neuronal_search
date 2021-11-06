@@ -81,6 +81,32 @@ class Log(db.Base):
         return self.uuid
 
 
+class QuestionAnswer(db.Base):
+    __tablename__ = "question_answer"
+
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    uuid = Column(Unicode(36), nullable=False, index=True, unique=True, default=_uuid4)
+    question = Column(Text, nullable=False)
+    answer = Column(Text, nullable=False)
+    business = Column(String, nullable=False)
+    category = Column(String, nullable=False)
+    subcategory = Column(String, nullable=True)
+    created_at = Column(DateTime, default=now)
+
+    def __init__(self, question, answer, business, category, subcategory=None):
+        self.question = question
+        self.answer = answer
+        self.business = business
+        self.category = category
+        self.subcategory = subcategory
+
+    def __repr__(self):
+        return f"QA({self.question}, {self.answer}, {self.business}, {self.category})"
+
+    def __str__(self):
+        return self.uuid
+
+
 def run():
     # feedback = Feedback('Python', 'Hello world', True)
     # db.session.add(feedback)

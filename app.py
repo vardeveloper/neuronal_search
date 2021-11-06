@@ -15,7 +15,7 @@ from executors.executors import MyTransformer, MyIndexer
 
 from pydantic import BaseModel
 import db
-from models import Feedback as Model_Feedback
+from models import Feedback as Model_Feedback, QuestionAnswer
 from helpers import make_categories_json
 
 
@@ -97,24 +97,35 @@ def run(args):
 
         assert [torch, transformers]  #: prevent pycharm auto remove the above line
 
-    targets = {
-        "questions-csv": {
-            # 'url': args.index_data_url,
-            "filename": os.path.join(args.workdir, "../dataset.csv"),
-        }
-    }
-
     jina.helper.extend_rest_interface = extend_rest_function
     f = _get_flow(args)
-    f.expose_endpoint('/index_docs',
-        summary='add document in dataset',
-        tags=['APIs'],
-        methods=['POST']
+    f.expose_endpoint(
+        "/index_docs",
+        summary="add document in dataset",
+        tags=["APIs"],
+        methods=["POST"],
     )
 
     # index it!
-    with f, open(targets["questions-csv"]["filename"]) as fp:
-        f.index(from_csv(fp, field_resolver={"question": "text"}), show_progress=True)
+    with f:
+        rows = db.session.query(QuestionAnswer).all()
+        f.index(
+            DocumentArray(
+                Document(
+                    id=data,
+                    text=str(data.question),
+                    tags={
+                        "question": str(data.question),
+                        "answer": str(data.answer),
+                        "business": str(data.business),
+                        "category": str(data.category),
+                        "subcategory": str(data.subcategory),
+                    },
+                )
+                for data in rows
+            ),
+            show_progress=True,
+        )
         f.block()
 
 
