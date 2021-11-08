@@ -106,27 +106,35 @@ def run(args):
         methods=["POST"],
     )
 
-    # index it!
-    with f:
-        rows = db.session.query(QuestionAnswer).all()
-        f.index(
-            DocumentArray(
-                Document(
-                    id=data,
-                    text=str(data.question),
-                    tags={
-                        "question": str(data.question),
-                        "answer": str(data.answer),
-                        "business": str(data.business),
-                        "category": str(data.category),
-                        "subcategory": str(data.subcategory),
-                    },
-                )
-                for data in rows
-            ),
-            show_progress=True,
-        )
-        f.block()
+    if os.getenv("INDEX") == "CSV":
+        with f, open("dataset/bancoppel.csv") as fp:
+            f.index(
+                from_csv(fp, field_resolver={"question": "text"}),
+                show_progress=True
+            )
+            f.block()
+
+    if os.getenv("INDEX") == "DB":
+        with f:
+            rows = db.session.query(QuestionAnswer).all()
+            f.index(
+                DocumentArray(
+                    Document(
+                        id=data,
+                        text=str(data.question),
+                        tags={
+                            "question": str(data.question),
+                            "answer": str(data.answer),
+                            "business": str(data.business),
+                            "category": str(data.category),
+                            "subcategory": str(data.subcategory),
+                        },
+                    )
+                    for data in rows
+                ),
+                show_progress=True
+            )
+            f.block()
 
 
 if __name__ == "__main__":
