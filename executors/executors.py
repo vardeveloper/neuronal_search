@@ -1,3 +1,4 @@
+import os
 from uuid import uuid4
 
 from typing import Optional, Dict, Tuple
@@ -13,6 +14,8 @@ import db
 from models import Log, QuestionAnswer
 from helpers import add_tag_html, add_row_dataset
 
+from dotenv import load_dotenv
+load_dotenv()
 
 class MyTransformer(Executor):
     """Transformer executor class"""
@@ -109,16 +112,19 @@ class MyIndexer(Executor):
     @requests(on="/index_docs")
     def index_docs(self, docs: "DocumentArray", **kwargs):
         self._docs.extend(docs)
-        # add_row_dataset(docs)
 
-        for row in docs:
-            try:
-                qa = QuestionAnswer(**row.tags)
-                db.session.add(qa)
-                db.session.commit()
-            except Exception as e:
-                print(e)
-                db.session.rollback()
+        if os.getenv("INDEX") == "CSV":
+            add_row_dataset(docs)
+
+        if os.getenv("INDEX") == "DB":
+            for row in docs:
+                try:
+                    qa = QuestionAnswer(**row.tags)
+                    db.session.add(qa)
+                    db.session.commit()
+                except Exception as e:
+                    print(e)
+                    db.session.rollback()
 
     @requests(on="/search")
     def search(self, docs: "DocumentArray", parameters, **kwargs):

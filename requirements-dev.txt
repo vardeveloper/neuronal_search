@@ -1,0 +1,7 @@
+flake8
+isort
+black
+mypy
+bandit
+pretty_errors
+pipdeptree
