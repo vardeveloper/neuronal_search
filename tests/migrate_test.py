@@ -4,7 +4,7 @@ import db
 
 
 def run():
-    result = db.engine.execute("ALTER TABLE public.log ADD test_2 TEXT")
+    result = db.engine.execute("ALTER TABLE public.log ADD search TEXT")
     print(result)
 
 
