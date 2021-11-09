@@ -59,7 +59,7 @@ def add_row_dataset(docs):
 
 
 def add_tag_html(string):
-    string = re.sub(r"\s+", " ", string)
+    # string = re.sub(r"\s+", " ", string) # remove white space
     matches = re.findall(r"http.*?\S+", string)
     for match in matches:
         string = re.sub(
