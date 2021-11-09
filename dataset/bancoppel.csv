@@ -1,5 +1,5 @@
 business,category,subcategory,question,answer
-BANCOPPEL,Help,Créditos,¿En dónde puedo pagar mi tarjeta de crédito?,"Puedes realizar el pago de tu Tarjeta de Crédito:
+BANCOPPEL,Créditos,Help,¿En dónde puedo pagar mi tarjeta de crédito?,"Puedes realizar el pago de tu Tarjeta de Crédito:
 
 - Por medio de tu App BanCoppel y/o Banca por Internet.
 - Tiendas Oxxo.
@@ -7,7 +7,7 @@ BANCOPPEL,Help,Créditos,¿En dónde puedo pagar mi tarjeta de crédito?,"Puedes
 - Directamente en sucursal BanCoppel o en tienda Coppel.
 
 Si deseas encontrar la sucursal más cercana da click aqui: https://www.bancoppel.com/geolocalizacion/"
-BANCOPPEL,Help,Créditos,¿Cómo solicito la Tarjeta de Crédito Oro?,"La Tarjeta de Crédito Oro se encuentra disponible únicamente por invitación, y los requisitos para obtenerla son: 
+BANCOPPEL,Créditos,Help,¿Cómo solicito la Tarjeta de Crédito Oro?,"La Tarjeta de Crédito Oro se encuentra disponible únicamente por invitación, y los requisitos para obtenerla son: 
 
 1.- Identificación oficial vigente con fotografía (INE, pasaporte).
 2.- Excelente historial crediticio.
@@ -15,14 +15,14 @@ BANCOPPEL,Help,Créditos,¿Cómo solicito la Tarjeta de Crédito Oro?,"La Tarje
 4.- Tener Tarjeta de Crédito BanCoppel Clásica. 
 
 La Tarjeta de Crédito Oro es un medio de pago en Moneda Nacional diseñado para Clientes que demandan beneficios preferenciales y mayor financiamiento para sus compras."
-BANCOPPEL,Help,Créditos,¿Cómo solicito la Tarjeta de Crédito BanCoppel?,"Para realizar la solicitud de la Tarjeta de Crédito BanCoppel solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos: 
+BANCOPPEL,Créditos,Help,¿Cómo solicito la Tarjeta de Crédito BanCoppel?,"Para realizar la solicitud de la Tarjeta de Crédito BanCoppel solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos: 
 
 1.- Identificación oficial vigente con fotografía (INE, pasaporte).En caso de ser extranjero, presentar pasaporte vigente y documento migratorio FMM.
 2.- Comprobante de domicilio (no mayor a 3 meses).
 3.- Comprobante de ingresos (opcional). 
 
 La Tarjeta de Crédito BanCoppel es un medio de pago que te da acceso a un crédito de forma fácil y oportuna para realizar compras diarias en cualquier establecimiento y retiros de efectivo."
-BANCOPPEL,Help,Créditos,¿Cómo solicito un Préstamo Personal?,"Para realizar la solicitud de un Préstamo Personal solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos:
+BANCOPPEL,Créditos,Help,¿Cómo solicito un Préstamo Personal?,"Para realizar la solicitud de un Préstamo Personal solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos:
 
 1.- Identificación oficial vigente con fotografía (INE, pasaporte). En caso de ser extranjero, presentar pasaporte vigente y documento migratorio FMM.
 2.- Comprobante de domicilio (no mayor a 3 meses).
@@ -30,7 +30,7 @@ BANCOPPEL,Help,Créditos,¿Cómo solicito un Préstamo Personal?,"Para realizar
 4.-Contar con una Cuenta Efectiva BanCoppel. 
 
 El Préstamo Personal es un crédito simple, sin garantía específica y sin aval, cuyo destino es afrontar gastos o emergencias. Los plazos que puedes elegir es 12, 18 ó 24 meses. "
-BANCOPPEL,Help,Créditos,¿Cómo solicito un Préstamo Digital?,"Para realizar la solicitud de un Préstamo Digital solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos: 
+BANCOPPEL,Créditos,Help,¿Cómo solicito un Préstamo Digital?,"Para realizar la solicitud de un Préstamo Digital solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos: 
 
 1.- Identificación oficial vigente con fotografía (INE, pasaporte).   En caso de ser extranjero, presentar pasaporte vigente y documento migratorio FMM.
 2.- Comprobante de domicilio (no mayor a 3 meses). 
@@ -38,7 +38,7 @@ BANCOPPEL,Help,Créditos,¿Cómo solicito un Préstamo Digital?,"Para realizar 
 4.-Contar con una Cuenta Efectiva BanCoppel. 
 
 El Préstamo Digital es un crédito simple en moneda nacional sin garantía especifica y sin aval cuyo destino es afrontar gastos, emergencias o imprevistos."
-BANCOPPEL,Help,Créditos,¿Qué operaciones puedo hacer en la App BanCoppel?,"Las operaciones que puedes realizar en App BanCoppel son: 
+BANCOPPEL,Créditos,Help,¿Qué operaciones puedo hacer en la App BanCoppel?,"Las operaciones que puedes realizar en App BanCoppel son: 
 
 - Abrir una Cuenta Clic desde donde estés, en menos de 5 minutos.
 - Consultar y Descargar tu Estado de Cuenta.
@@ -48,15 +48,19 @@ BANCOPPEL,Help,Créditos,¿Qué operaciones puedo hacer en la App BanCoppel?,"La
 - Pagar tarjetas de crédito BanCoppel y de otros bancos.
 - Enviar dinero a cuentas BanCoppel y de otros bancos.
 - Comprar en línea de manera segura con el Código de Seguridad Dinámico"
-BANCOPPEL,Help,Créditos,¿Cómo puedo consultar mi estado de cuenta?,Si deseas obtener tu Estado de Cuenta de Crédito o Débito puedes hacerlo en tu Banca por Internet o activando el envío a tu correo electrónico en cualquier sucursal BanCoppel.
-BANCOPPEL,Help,Créditos,¿En dónde puedo retirar efectivo?,"Para retirar de tu Tarjeta de Debito BanCoppel puedes hacerlo en:
+BANCOPPEL,Créditos,Help,¿Cómo puedo consultar mi estado de cuenta?,Si deseas obtener tu Estado de Cuenta de Crédito o Débito puedes hacerlo en tu Banca por Internet o activando el envío a tu correo electrónico en cualquier sucursal BanCoppel.
+BANCOPPEL,Créditos,Help,¿En dónde puedo retirar efectivo?,"Para retirar de tu Tarjeta de Debito BanCoppel puedes hacerlo en:
 
 - Cajeros Automáticos BanCoppel
 - Tiendas de Autoservicio 
 - Tiendas Oxxo
 - Tiendas Coppel
-- Sucursales BanCoppel"
-BANCOPPEL,Help,Créditos,¿Qué operaciones puedo hacer por la banca por Internet?,"Las operaciones que puedes realizar son: 
+- Sucursales BanCoppel
+
+Para más información ve el siguiente video:
+
+<iframe width=""560"" height=""315"" src=""https://www.youtube.com/embed/akqr0YIlFas?controls=0"" title=""YouTube video player"" frameborder=""0"" allow=""accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"" allowfullscreen></iframe>"
+BANCOPPEL,Créditos,Help,¿Qué operaciones puedo hacer por la banca por Internet?,"Las operaciones que puedes realizar son: 
 
 - Consulta de Saldos y Movimientos
 - Transferencia entre cuentas BanCoppel y otros bancos (SPEI)
@@ -72,8 +76,9 @@ BANCOPPEL,Help,Créditos,¿Qué operaciones puedo hacer por la banca por Interne
 - Registro de Cuentas, tarjetas y servicios frecuentes
 
 Para operar el servicio de Banca por internet se requiere del dispositivo electrónico de seguridad Token Digital, el cual te permitirá autorizar las operaciones que realices. 
+
 Activalo sin costo en la App BanCoppel."
-BANCOPPEL,Help,Depositos,¿En donde puedo depositar efectivo a mi cuenta?,"Los medios para depositarle a tu Tarjeta de Débito BanCoppel Efectiva son los siguientes: 
+BANCOPPEL,Depositos,Help,¿En donde puedo depositar efectivo a mi cuenta?,"Los medios para depositarle a tu Tarjeta de Débito BanCoppel Efectiva son los siguientes: 
 
 - Traspasos entre cuentas propias en Banca por Internet, App BanCoppel o Sucursal. 
 - SPEI de otro banco hacia BanCoppel. 
@@ -81,9 +86,9 @@ BANCOPPEL,Help,Depositos,¿En donde puedo depositar efectivo a mi cuenta?,"Los m
 - Tiendas Oxxo.
 - Traspaso en Cajeros Automáticos BanCoppel
 - Ventanillas Electrónicas BanCoppel"
-BANCOPPEL,Help,Depositos,¿Puedo cobrar dinero del extranjero en BanCoppel?,"Con el servicio de Envíos de Dinero BanCoppel podrás recibir tu dinero del extranjero y cobrarlo con estas opciones:
+BANCOPPEL,Depositos,Help,¿Puedo cobrar dinero del extranjero en BanCoppel?,"Con el servicio de Envíos de Dinero BanCoppel podrás recibir tu dinero del extranjero y cobrarlo con estas opciones:
 
-Depósito a Cuenta:
+<strong>Depósito a Cuenta:</strong>
 
 - Sin hacer filas.
 - Tu dinero llega directo a tu cuenta.
@@ -96,7 +101,7 @@ Además tienes estos beneficios:
 - No tienes límite de envíos.
 - Te notificaremos mediante un SMS cuando recibas tu dinero.
 
-En Sucursal:
+<strong>En Sucursal:</strong>
 
 - Con más de 1,200 sucursales en todo México.
 - Abiertas de lunes a domingo.
@@ -113,7 +118,9 @@ Además tienes estos beneficios: 
 - Tus cobros serán más rápidos y seguros ya que cobrarás con tu huella digital.
 
 Una vez registrada tu huella, podrás cobrar tus próximos envíos solo con tu clave de envío y tu huella digital la cual autenticará tu identidad."
-BANCOPPEL,Help,Tarjeta,¿Qué promociones tengo al pagar con mi tarjeta?,"Conoce todas las promociones que tienes al pagar con tus Tarjetas BanCoppel en: 
+BANCOPPEL,Tarjeta,Help,¿Qué promociones tengo al pagar con mi tarjeta?,"<img src=""https://centrodeayuda.bancoppel.com/hc/article_attachments/360087727294/image-0.png"" alt="""">
+
+Conoce todas las promociones que tienes al pagar con tus Tarjetas BanCoppel en: 
 
 - Restaurantes
 - Farmacias
@@ -124,21 +131,29 @@ BANCOPPEL,Help,Tarjeta,¿Qué promociones tengo al pagar con mi tarjeta?,"Conoce
 
 Entre muchos más…. 
 
-Da clic aquí para más información:https://promocionesbancoppel.com/"
-BANCOPPEL,Help,Tarjeta,¿Cómo puedo reportar mi tarjeta?,"Si te robaron, extraviaste o tienes un cargo no reconocido  en tu tarjeta puedes reportarla:
+Da clic aquí para más información:
+
+https://promocionesbancoppel.com/"
+BANCOPPEL,Tarjeta,Help,¿Cómo puedo reportar mi tarjeta?,"Si te robaron, extraviaste o tienes un cargo no reconocido  en tu tarjeta puedes reportarla:
 
 - Enviando un mensaje de texto al 98000 con la palabra ROBO o EXTRAVIO (según sea el caso) más los últimos 4 dígitos de tu tarjeta.
   Ejemplo: ROBO(deja un espacio)1234
+  <img src=""https://centrodeayuda.bancoppel.com/hc/article_attachments/360088889813/image-0.png"" alt="""">
 - En tu sesión de Banca por Internet dando clic en el botón de ""Reporte de Tarjetas"".
+  <img src=""https://centrodeayuda.bancoppel.com/hc/article_attachments/360088889793/image-1.png"" alt="""">
 - En nuestra línea de Atención a Clientes: 800 1226 7735 (las 24 horas del día, los 365 días del año)
 - Directamente en Sucursal"
-BANCOPPEL,Help,Tarjeta,¿Como puedo hacer compras más seguras en linea o por teléfono?,Para realizar compras y por tu seguridad debes activar el Código de Seguridad Dinámico desde App BanCoppel para proteger los datos de tus Tarjetas ya sea en línea o por teléfono. 
-BANCOPPEL,Help,Tarjeta,¿Cómo realizo un Retiro sin Tarjeta?,"Realizar retiros sin tarjeta desde la App BanCoppel es muy sencillo, solo tienes que seguir estos pasos:
+BANCOPPEL,Tarjeta,Help,¿Como puedo hacer compras más seguras en linea o por teléfono?,"Para realizar compras y por tu seguridad debes activar el Código de Seguridad Dinámico desde App BanCoppel para proteger los datos de tus Tarjetas ya sea en línea o por teléfono. 
 
-- https://youtu.be/irykt6FqGns
+Si aún no la has activado da click aquí y conoce cómo hacerlo de manera muy fácil:
+
+<iframe width=""560"" height=""315"" src=""https://www.youtube.com/embed/RDujLbVXxw4?controls=0"" title=""YouTube video player"" frameborder=""0"" allow=""accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"" allowfullscreen></iframe>"
+BANCOPPEL,Tarjeta,Help,¿Cómo realizo un Retiro sin Tarjeta?,"Realizar retiros sin tarjeta desde la App BanCoppel es muy sencillo, solo tienes que seguir estos pasos:
+
+<iframe width=""560"" height=""315"" src=""https://www.youtube.com/embed/irykt6FqGns?controls=0"" title=""YouTube video player"" frameborder=""0"" allow=""accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"" allowfullscreen></iframe>
 
 Si tienes dudas puedes comunicarte con nuestro Anfitrión Digital al 800 1226 7735 donde con gusto te apoyara."
-BANCOPPEL,Help,Cuenta,Cuenta Efectiva Jóvenes,"Si tienes entre 14 y 17 años aprende a administrar tu dinero con la Cuenta Efectiva Jóvenes, es muy fácil de obtener ya que la puedes abrir en cualquier sucursal.
+BANCOPPEL,Cuenta,Help,Cuenta Efectiva Jóvenes,"Si tienes entre 14 y 17 años aprende a administrar tu dinero con la Cuenta Efectiva Jóvenes, es muy fácil de obtener ya que la puedes abrir en cualquier sucursal.
 
 Los requisitos son:
 
@@ -146,18 +161,18 @@ Los requisitos son:
 2.- Identificación oficial vigente con fotografía del joven (credencial escolar, pasaporte) 
 3.- Comprobante de domicilio (no mayor a 3 meses).
 4.- Presentar el acta de nacimiento del joven para saber quien es el padre o la madre o una sentencia judicial en donde se defina al tutor."
-BANCOPPEL,Help,Cuenta,¿Cómo puedo abrir una Cuenta Efectiva Digital?,"Administrar tu dinero ¡es muy fácil! para abrir una Cuenta Efectiva Digital solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos: 
+BANCOPPEL,Cuenta,Help,¿Cómo puedo abrir una Cuenta Efectiva Digital?,"Administrar tu dinero ¡es muy fácil! para abrir una Cuenta Efectiva Digital solo tienes que acudir a cualquier Sucursal BanCoppel y cumplir con los siguientes requisitos: 
 
 1.- Identificación oficial vigente con fotografía (INE, pasaporte). En caso de ser extranjero, presentar pasaporte vigente y documento migratorio FMM.  
 2.- Comprobante de domicilio (no mayor a 3 meses)."
-BANCOPPEL,Help,Cuenta,Cuenta Efectiva Cheques,"La Cuenta Efectiva Cheques es fácil de obtener ya que la puedes abrir en cualquier sucursal y es de gran ayuda para que empieces a ahorrar y cumplir tus metas. 
+BANCOPPEL,Cuenta,Help,Cuenta Efectiva Cheques,"La Cuenta Efectiva Cheques es fácil de obtener ya que la puedes abrir en cualquier sucursal y es de gran ayuda para que empieces a ahorrar y cumplir tus metas. 
 
 Los requisitos son:
 
 1.- Identificación oficial vigente con fotografía (INE, pasaporte). 
 2.- En caso de ser extranjero, presentar pasaporte vigente y documento migratorio FMM.   
 3.- Comprobante de domicilio (no mayor a 3 meses)."
-BANCOPPEL,Help,Cuenta,¿En dónde puedo enviar(transferir) dinero a otras cuentas?,"Los medios para enviar dinero a cuentas BanCoppel y otros bancos son los siguientes:
+BANCOPPEL,Cuenta,Help,¿En dónde puedo enviar(transferir) dinero a otras cuentas?,"Los medios para enviar dinero a cuentas BanCoppel y otros bancos son los siguientes:
 
 - Banca por Internet
 - App BanCoppel
@@ -166,6 +181,6 @@ BANCOPPEL,Help,Cuenta,¿En dónde puedo enviar(transferir) dinero a otras cuenta
 Para más información da clic aquí: 
 
 https://www.bancoppel.com/sinfilas/home/"
-BANCOPPEL,Help,Cuenta,¿Qué necesito para recibir mi nómina en BanCoppel?,"La portabilidad de nómina es el derecho que tienes por ser el titular de la cuenta en donde te depositan tu salario, de transferir la totalidad de los recursos depositados a tu cuenta efectiva en BanCoppel sin que la institución que transfiera tus recursos pueda cobrar penalización alguna por utilizar este servicio. 
+BANCOPPEL,Cuenta,Help,¿Qué necesito para recibir mi nómina en BanCoppel?,"La portabilidad de nómina es el derecho que tienes por ser el titular de la cuenta en donde te depositan tu salario, de transferir la totalidad de los recursos depositados a tu cuenta efectiva en BanCoppel sin que la institución que transfiera tus recursos pueda cobrar penalización alguna por utilizar este servicio. 
 
 Para poder recibir tu nómina en BanCoppel lo único que necesitas es tener una Cuenta Efectiva Digital, solicitar tu portabilidad desde Banca por internet o bien en cualquiera de nuestras Sucursales. Para ello es necesario contar con tu Identificación Oficial y El contrato, estado de cuenta o tarjeta de débito correspondiente desde la que quieres hacer la transferencia de tus recursos."

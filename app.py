@@ -107,7 +107,7 @@ def run(args):
     )
 
     if os.getenv("INDEX") == "CSV":
-        with f, open("dataset/bancoppel.csv") as fp:
+        with f, open("dataset.csv") as fp:
             f.index(
                 from_csv(fp, field_resolver={"question": "text"}),
                 show_progress=True
