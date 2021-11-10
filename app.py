@@ -1,4 +1,5 @@
 import os
+import glob
 import json
 
 from pathlib import Path
@@ -107,11 +108,13 @@ def run(args):
     )
 
     if os.getenv("INDEX") == "CSV":
-        with f, open("dataset.csv") as fp:
-            f.index(
-                from_csv(fp, field_resolver={"question": "text"}),
-                show_progress=True
-            )
+        with f:
+            for dataset in glob.iglob(os.path.join("dataset", "*.csv")):
+                with open(dataset) as fp:
+                    f.index(
+                        from_csv(fp, field_resolver={"question": "text"}),
+                        show_progress=True
+                    )
             f.block()
 
     if os.getenv("INDEX") == "DB":

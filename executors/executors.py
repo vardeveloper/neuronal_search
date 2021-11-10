@@ -9,6 +9,7 @@ from transformers import AutoModel, AutoTokenizer, MPNetConfig
 
 from jina import Executor, DocumentArray, requests, Document
 from jina.types.arrays.memmap import DocumentArrayMemmap
+from jina.logging.predefined import default_logger
 
 import db
 from models import Log, QuestionAnswer
@@ -110,21 +111,24 @@ class MyIndexer(Executor):
         self._docs.extend(docs)
 
     @requests(on="/index_docs")
-    def index_docs(self, docs: "DocumentArray", **kwargs):
+    def index_docs(self, docs: "DocumentArray", parameters, **kwargs):
         self._docs.extend(docs)
 
-        if os.getenv("INDEX") == "CSV":
-            add_row_dataset(docs)
+        if "business" in parameters:
+            add_row_dataset(docs, parameters["business"].strip().lower())
 
-        if os.getenv("INDEX") == "DB":
-            for row in docs:
-                try:
-                    qa = QuestionAnswer(**row.tags)
-                    db.session.add(qa)
-                    db.session.commit()
-                except Exception as e:
-                    print(e)
-                    db.session.rollback()
+        for doc in docs:
+            try:
+                qa = db.session.query(QuestionAnswer).filter_by(business=doc.tags["business"], question=doc.text).first()
+                if qa:
+                    default_logger.error(f'This question already exists: {qa.question}')
+                    continue
+                qa = QuestionAnswer(**doc.tags)
+                db.session.add(qa)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                default_logger.error(f'Error: {e}')
 
     @requests(on="/search")
     def search(self, docs: "DocumentArray", parameters, **kwargs):
@@ -159,7 +163,7 @@ class MyIndexer(Executor):
                             d.scores["cosine"] = 1 - _dist
                             d.tags["uuid"] = message_uuid
                             d.tags["question"] = d.text
-                            d.tags["answer_html"] = add_tag_html(d.tags["answer"])
+                            d.tags["answer_html"] = d.tags["answer"].replace("\n", "<br>")
                             d.pop("embedding")
                             _q.matches.append(d)
 
@@ -193,8 +197,8 @@ class MyIndexer(Executor):
             db.session.add(log)
             db.session.commit()
         except Exception as e:
-            print("ERROR LOG:", str(e))
             db.session.rollback()
+            default_logger.error(f'Error: {e}')
 
     @staticmethod
     def _get_sorted_top_k(

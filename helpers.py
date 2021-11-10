@@ -48,14 +48,15 @@ def make_categories_json(business, csvFilePath):
         jsonf.write(json.dumps(data, indent=4))
 
 
-def add_row_dataset(docs):
-    dataset = os.path.join(".", "dataset.csv")
-    field_names = ["business", "category", "subcategory", "question", "answer"]
-    with open(dataset, "a") as f:
-        dictwriter = csv.DictWriter(f, fieldnames=field_names)
-        for row in docs:
-            dictwriter.writerow(row.tags)
-        f.close()
+def add_row_dataset(docs, business):
+    dataset = os.path.join("dataset", business + ".csv")
+    if os.path.exists(dataset):
+        field_names = ["business", "category", "subcategory", "question", "answer"]
+        with open(dataset, "a") as f:
+            dictwriter = csv.DictWriter(f, fieldnames=field_names)
+            for row in docs:
+                dictwriter.writerow(row.tags)
+            f.close()
 
 
 def add_tag_html(string):
