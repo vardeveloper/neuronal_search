@@ -62,7 +62,7 @@ def extend_rest_function(app):
     @app.post("/categories_generate/", tags=["My Extended APIs"])
     def generate_categories(category: Category):
         try:
-            csvFilePath = os.path.join(".", "dataset.csv")
+            csvFilePath = os.path.join("dataset", category.business.lower() + ".csv")
             make_categories_json(category.business, csvFilePath)
         except Exception as e:
             return dict(status=False, message=str(e))
