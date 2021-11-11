@@ -17,7 +17,7 @@ from executors.executors import MyTransformer, MyIndexer
 from pydantic import BaseModel
 import db
 from models import Feedback as Model_Feedback, QuestionAnswer
-from helpers import make_categories_json
+from helpers import make_categories_json, save_dataset
 
 
 class Feedback(BaseModel):
@@ -52,9 +52,9 @@ def extend_rest_function(app):
 
     @app.post("/categories/", tags=["My Extended APIs"])
     def get_categories(category: Category):
-        path_filename = os.path.join("dataset", category.business.lower() + ".json")
-        if os.path.isfile(path_filename):
-            with open(path_filename) as f:
+        category_json = os.path.join("dataset", category.business.lower() + ".json")
+        if os.path.isfile(category_json):
+            with open(category_json) as f:
                 data = json.load(f)
             return dict(status=True, data=data)
         return dict(status=False, message="File no exists!")
@@ -62,12 +62,26 @@ def extend_rest_function(app):
     @app.post("/categories_generate/", tags=["My Extended APIs"])
     def generate_categories(category: Category):
         try:
-            csvFilePath = os.path.join("dataset", category.business.lower() + ".csv")
-            make_categories_json(category.business, csvFilePath)
+            dataset = os.path.join("dataset", category.business.lower() + ".csv")
+            if not os.path.isfile(dataset):
+                return dict(status=False, message=f"Dataset {category.business.lower()}.csv no exists!")
+            make_categories_json(category.business, dataset)
         except Exception as e:
             return dict(status=False, message=str(e))
         else:
             return dict(status=True, message="Json created successfully")
+
+    @app.post("/save_dataset/", tags=["My Extended APIs"])
+    def dataset_save(category: Category):
+        try:
+            dataset = os.path.join("dataset", category.business.lower() + ".csv")
+            if not os.path.isfile(dataset):
+                return dict(status=False, message=f"Dataset {category.business.lower()}.csv no exists!")
+            save_dataset(category.business.lower())
+        except Exception as e:
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, message="Dataset saved successfully")
 
     return app
 
