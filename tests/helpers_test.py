@@ -115,5 +115,23 @@ def save_dataset(business):
                 print(f'Error: {e}')
 
 
+def create_dataset_test(business):
+    dataset = os.path.join("dataset", business + ".csv")
+    with open(dataset, "w", encoding="utf-8") as f:
+        field_names = ["business", "category", "subcategory", "question", "answer"]        
+        dictwriter = csv.DictWriter(f, fieldnames=field_names)
+        dictwriter.writeheader()
+        for _ in range(10000):
+            data = {
+                "business": "DEVAR",
+                "category": "TI",
+                "subcategory": "KEOS",
+                "question": "What is Neural Search?",
+                "answer": "The core idea of neural search is to leverage state-of-the-art deep neural networks to build every component of a search system. In short, neural search is deep neural network-powered information retrieval. In academia, it\u2019s often called neural IR."
+            }
+            dictwriter.writerow(data)
+        f.close()
+
+
 if __name__ == "__main__":
-    save_dataset("bancoppel")
+    create_dataset_test("test_10000")
