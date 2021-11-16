@@ -90,8 +90,9 @@ def _get_flow(args):
     """Ensure the same flow is used in hello world example and system test."""
     return (
         Flow(cors=True, protocol="http", port_expose=8000)
-        .add(uses=MyTransformer, parallel=2, timeout_ready=-1)
+        .add(uses=MyTransformer, replicas=3, timeout_ready=-1)
         .add(uses=MyIndexer, workspace=args.workdir)
+        .plot('flow.svg')
     )
 
 
