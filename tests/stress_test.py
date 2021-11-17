@@ -5,8 +5,6 @@ import time
 
 
 URL_JINA = "https://jinadev.keos.co/index.php/search/"
-# URL_JINA = "http://34.125.201.168:8000/search/"
-# URL_JINA = "http://34.125.201.168/index.php/search/"
 
 
 async def request_api(session, n):

@@ -8,12 +8,13 @@ load_dotenv()
 
 engine = create_engine(
     "postgresql://{}:{}@{}:{}/{}".format(
-        os.getenv("DB_USER", "postgres"),
-        os.getenv("DB_PASS", "postgres"),
-        os.getenv("DB_HOST", "localhost"),
-        os.getenv("DB_PORT", 5432),
-        os.getenv("DB_NAME", "jina_search"),
-    )
+        os.getenv("DB_USER"),
+        os.getenv("DB_PASS"),
+        os.getenv("DB_HOST"),
+        os.getenv("DB_PORT"),
+        os.getenv("DB_NAME"),
+    ),
+    echo=bool(os.getenv("DEBUG"))
 )
 
 Session = sessionmaker(bind=engine)

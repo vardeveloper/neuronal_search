@@ -29,6 +29,12 @@ class Category(BaseModel):
     business: str
 
 
+class Question_Answer(BaseModel):
+    business: str
+    date_start: str
+    date_end: str
+
+
 def extend_rest_function(app):
     @app.post("/feedback/", tags=["My Extended APIs"])
     def create_feedback(feedback: Feedback):
@@ -82,6 +88,72 @@ def extend_rest_function(app):
             return dict(status=False, message=str(e))
         else:
             return dict(status=True, message="Dataset saved successfully")
+
+    @app.post("/report_question_answer/", tags=["My Extended APIs"])
+    def question_answer(qa: Question_Answer):
+        try:
+            rows = (
+                db.session.query(QuestionAnswer)
+                .filter(
+                    QuestionAnswer.business == qa.business,
+                    QuestionAnswer.created_at.between(qa.date_start, qa.date_end)
+                )
+                .all()
+            )
+            if not rows:
+                return dict(status=False, message="No hay nada")
+
+            data = []
+            for row in rows:
+                document = {
+                    "uuid": row.uuid,
+                    "business": row.business,
+                    "category": row.category,
+                    "subcategory": row.subcategory,
+                    "question": row.question,
+                    "answer": row.answer,
+                    "created_at": row.created_at
+                }
+                data.append(document)
+            body = {"data": data}
+
+        except Exception as e:
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, data=body)
+
+    @app.post("/report_log/", tags=["My Extended APIs"])
+    def log(log: Question_Answer):
+        try:
+            rows = (
+                db.session.query(QuestionAnswer)
+                .filter(
+                    QuestionAnswer.business == log.business,
+                    QuestionAnswer.created_at.between(log.date_start, log.date_end)
+                )
+                .all()
+            )
+            if not rows:
+                return dict(status=False, message="No hay nada")
+
+            data = []
+            for row in rows:
+                document = {
+                    "uuid": row.uuid,
+                    "business": row.business,
+                    "category": row.category,
+                    "search": row.search,
+                    "question": row.question,
+                    "answer": row.answer,
+                    "created_at": row.created_at
+                }
+                data.append(document)
+            body = {"data": data}
+
+        except Exception as e:
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, data=body)
 
     return app
 
