@@ -16,7 +16,7 @@ from executors.executors import MyTransformer, MyIndexer
 
 from pydantic import BaseModel
 import db
-from models import Feedback as Model_Feedback, QuestionAnswer
+from models import Feedback as Model_Feedback, QuestionAnswer, Log
 from helpers import make_categories_json, save_dataset
 
 
@@ -90,7 +90,7 @@ def extend_rest_function(app):
             return dict(status=True, message="Dataset saved successfully")
 
     @app.post("/report_question_answer/", tags=["My Extended APIs"])
-    def question_answer(qa: Question_Answer):
+    def report_question_answer(qa: Question_Answer):
         try:
             rows = (
                 db.session.query(QuestionAnswer)
@@ -123,13 +123,13 @@ def extend_rest_function(app):
             return dict(status=True, data=body)
 
     @app.post("/report_log/", tags=["My Extended APIs"])
-    def log(log: Question_Answer):
+    def report_log(log: Question_Answer):
         try:
             rows = (
-                db.session.query(QuestionAnswer)
+                db.session.query(Log)
                 .filter(
-                    QuestionAnswer.business == log.business,
-                    QuestionAnswer.created_at.between(log.date_start, log.date_end)
+                    Log.business == log.business,
+                    Log.created_at.between(log.date_start, log.date_end)
                 )
                 .all()
             )
