@@ -133,5 +133,17 @@ def create_dataset_test(business):
         f.close()
 
 
+def date_development():
+    import datetime
+    from dateutil import tz
+    time_zone = tz.gettz("America/Lima")
+    now1 = datetime.datetime.now(tz=time_zone)
+    now2 = now1.strftime("%Y-%m-%d %H:%M:%S")
+    now3 = datetime.datetime.utcnow
+    now4 = datetime.datetime.now
+    date = list(now1, now2, now3) 
+    return date
+
 if __name__ == "__main__":
-    create_dataset_test("test_10000")
+    # create_dataset_test("test_10000")
+    print(date_development())
