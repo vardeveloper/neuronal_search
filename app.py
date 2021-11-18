@@ -162,7 +162,7 @@ def _get_flow(args):
     """Ensure the same flow is used in hello world example and system test."""
     return (
         Flow(cors=True, protocol="http", port_expose=8000)
-        .add(uses=MyTransformer, replicas=3, timeout_ready=-1)
+        .add(uses=MyTransformer, replicas=os.getenv("FLOW_EXECUTOR_REPLICAS"), timeout_ready=-1)
         .add(uses=MyIndexer, workspace=args.workdir)
         .plot('flow.svg')
     )
@@ -194,7 +194,7 @@ def run(args):
         methods=["POST"],
     )
 
-    if os.getenv("INDEX") == "CSV":
+    if os.getenv("DATASET_SOURCE") == "CSV":
         with f:
             for dataset in glob.iglob(os.path.join("dataset", "*.csv")):
                 with open(dataset) as fp:
@@ -204,7 +204,7 @@ def run(args):
                     )
             f.block()
 
-    if os.getenv("INDEX") == "DB":
+    if os.getenv("DATASET_SOURCE") == "DB":
         with f:
             rows = db.session.query(QuestionAnswer).all()
             f.index(
