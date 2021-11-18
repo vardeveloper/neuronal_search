@@ -141,7 +141,7 @@ def date_development():
     now2 = now1.strftime("%Y-%m-%d %H:%M:%S")
     now3 = datetime.datetime.utcnow
     now4 = datetime.datetime.now
-    date = list(now1, now2, now3) 
+    date = [now1, now2, now3, now4]
     return date
 
 if __name__ == "__main__":
