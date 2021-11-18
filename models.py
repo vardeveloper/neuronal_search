@@ -18,10 +18,10 @@ from sqlalchemy import (
 import db
 
 
-time_zone = tz.gettz("America/Lima")
-utc = datetime.datetime.now(tz=time_zone)
-now = utc.strftime("%Y-%m-%d %H:%M:%S")
-
+# time_zone = tz.gettz("America/Lima")
+# utc = datetime.datetime.now(tz=time_zone)
+# now = utc.strftime("%Y-%m-%d %H:%M:%S")
+now = datetime.datetime.now
 
 def _uuid4():
     return str(uuid4())
