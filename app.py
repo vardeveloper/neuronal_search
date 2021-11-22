@@ -14,7 +14,7 @@ from jina.types.document.generators import from_csv
 
 from executors.executors import MyTransformer, MyIndexer
 
-from sqlalchemy import func
+from sqlalchemy import desc, func
 from pydantic import BaseModel
 import db
 from models import Feedback as Model_Feedback, QuestionAnswer, Log
@@ -167,7 +167,9 @@ def extend_rest_function(app):
                     Log.question != "",
                     Log.created_at.between(log.date_start, log.date_end)
                 )
-                .group_by(Log.question)
+                .group_by(Log.id)
+                # .having(func.count(Log.question) > 10)
+                .order_by(desc(func.count(Log.question)))
                 .limit(log.limit)
             )
             if not rows:
