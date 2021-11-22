@@ -167,7 +167,7 @@ def extend_rest_function(app):
                     Log.question != "",
                     Log.created_at.between(log.date_start, log.date_end)
                 )
-                .group_by(Log.question)
+                .group_by(Log.question, Log.answer)
                 # .having(func.count(Log.question) > 10)
                 .order_by(func.count(Log.id))
                 .limit(log.limit)
