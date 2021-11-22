@@ -170,7 +170,7 @@ def extend_rest_function(app):
                 .group_by(Log.id)
                 # .having(func.count(Log.question) > 10)
                 .order_by(func.count(Log.question))
-                .limit(log.limit)
+                #.limit(log.limit)
                 .all()
             )
             if not rows:
@@ -181,11 +181,7 @@ def extend_rest_function(app):
             data = []
             for row in rows:
                 print()
-                print(type(row))
-                print(dir(row))
                 print(row)
-                print(row.keys())
-                print(row.items())
                 print()
                 document = {
                     "uuid": row.uuid,
