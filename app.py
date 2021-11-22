@@ -14,6 +14,7 @@ from jina.types.document.generators import from_csv
 
 from executors.executors import MyTransformer, MyIndexer
 
+from sqlalchemy import func
 from pydantic import BaseModel
 import db
 from models import Feedback as Model_Feedback, QuestionAnswer, Log
@@ -136,6 +137,43 @@ def extend_rest_function(app):
             if not rows:
                 return dict(status=False, message="No hay nada")
 
+            data = []
+            for row in rows:
+                document = {
+                    "uuid": row.uuid,
+                    "business": row.business,
+                    "category": row.category,
+                    "search": row.search,
+                    "question": row.question,
+                    "answer": row.answer,
+                    "created_at": row.created_at
+                }
+                data.append(document)
+            body = {"data": data}
+
+        except Exception as e:
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, data=body)
+
+    @app.post("/report_top_log/", tags=["My Extended APIs"])
+    def report_top_log(log: Question_Answer):
+        try:
+            rows = (
+                db.session.query(Log, func.count(Log.question))
+                .filter(
+                    Log.business == log.business,
+                    Log.question != "",
+                    Log.created_at.between(log.date_start, log.date_end)
+                )
+                .group_by(Log.question)
+                .limit(10)
+                .all()
+            )
+            if not rows:
+                return dict(status=False, message="No hay nada")
+
+            print(rows)
             data = []
             for row in rows:
                 document = {
