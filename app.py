@@ -176,24 +176,12 @@ def extend_rest_function(app):
             if not rows:
                 return dict(status=False, message="No hay nada")
 
-            # print(rows)
-            # print(str(rows))
             data = []
             for row in rows:
-                print()
-                print(row)
-                print()
-                print(row[0])
-                print(row[1])
-                print()
                 document = {
-                    "uuid": row.uuid,
-                    "business": row.business,
-                    "category": row.category,
-                    "search": row.search,
-                    "question": row.question,
-                    "answer": row.answer,
-                    "created_at": row.created_at
+                    "question": row[0],
+                    "answer": row[1],
+                    "total": row[2]
                 }
                 data.append(document)
             body = {"data": data}
