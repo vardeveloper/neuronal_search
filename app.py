@@ -176,16 +176,17 @@ def extend_rest_function(app):
                 return dict(status=False, message="No hay nada")
 
             print(rows)
+            print(str(rows))
             data = []
             for row in rows:
                 document = {
-                    "uuid": row.log_uuid,
-                    "business": row.log_business,
-                    "category": row.log_category,
-                    "search": row.log_search,
-                    "question": row.log_question,
-                    "answer": row.log_answer,
-                    "created_at": row.log_created_at
+                    "uuid": row.uuid,
+                    "business": row.business,
+                    "category": row.category,
+                    "search": row.search,
+                    "question": row.question,
+                    "answer": row.answer,
+                    "created_at": row.created_at
                 }
                 data.append(document)
             body = {"data": data}
