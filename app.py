@@ -179,9 +179,11 @@ def extend_rest_function(app):
             # print(str(rows))
             data = []
             for row in rows:
-                print(row)
                 print()
+                print(type(row))
+                print(row)
                 print(row.uuid)
+                print()
                 document = {
                     "uuid": row.uuid,
                     "business": row.business,
@@ -195,6 +197,7 @@ def extend_rest_function(app):
             body = {"data": data}
 
         except Exception as e:
+            default_logger.error(f'Error: {e}')
             return dict(status=False, message=str(e))
         else:
             return dict(status=True, data=body)
