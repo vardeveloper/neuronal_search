@@ -171,6 +171,7 @@ def extend_rest_function(app):
                 # .having(func.count(Log.question) > 10)
                 .order_by(func.count(Log.question))
                 .limit(log.limit)
+                .all()
             )
             if not rows:
                 return dict(status=False, message="No hay nada")
@@ -183,7 +184,8 @@ def extend_rest_function(app):
                 print(type(row))
                 print(dir(row))
                 print(row)
-                print(row['uuid'])
+                print(row.keys())
+                print(row.items())
                 print()
                 document = {
                     "uuid": row.uuid,
