@@ -15,7 +15,7 @@ def run():
         WHERE log.business = 'BANCOPPEL' 
         AND log.question != '' 
         AND log.created_at BETWEEN '2021-11-01 00:00:00' AND '2021-11-22 23:59:59' 
-        GROUP BY log.question
+        GROUP BY log.question, log.answer
         ORDER BY count(log.id)
         LIMIT 10
     """
