@@ -161,7 +161,7 @@ def extend_rest_function(app):
     def report_top_log(log: Question_Answer):
         try:
             rows = (
-                db.session.query(Log, func.count(Log.id))
+                db.session.query(Log.question, Log.answer, Log.category, func.count(Log.id))
                 .filter(
                     Log.business == log.business,
                     Log.question != "",
@@ -169,9 +169,9 @@ def extend_rest_function(app):
                 )
                 .group_by(Log.question)
                 # .having(func.count(Log.question) > 10)
-                .order_by(func.count(Log.id))
-                .limit(log.limit)
-                .all()
+                # .order_by(func.count(Log.id))
+                # .limit(log.limit)
+                # .all()
             )
             if not rows:
                 return dict(status=False, message="No hay nada")
