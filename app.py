@@ -181,8 +181,9 @@ def extend_rest_function(app):
             for row in rows:
                 print()
                 print(type(row))
+                print(dir(row))
                 print(row)
-                print(row.uuid)
+                print(row['uuid'])
                 print()
                 document = {
                     "uuid": row.uuid,
