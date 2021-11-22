@@ -180,6 +180,8 @@ def extend_rest_function(app):
             data = []
             for row in rows:
                 print(row)
+                print()
+                print(row.uuid)
                 document = {
                     "uuid": row.uuid,
                     "business": row.business,
