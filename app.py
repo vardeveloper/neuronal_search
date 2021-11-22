@@ -169,16 +169,17 @@ def extend_rest_function(app):
                 )
                 .group_by(Log.id)
                 # .having(func.count(Log.question) > 10)
-                .order_by(desc(func.count(Log.question)))
+                .order_by(func.count(Log.question))
                 .limit(log.limit)
             )
             if not rows:
                 return dict(status=False, message="No hay nada")
 
-            print(rows)
-            print(str(rows))
+            # print(rows)
+            # print(str(rows))
             data = []
             for row in rows:
+                print(row)
                 document = {
                     "uuid": row.uuid,
                     "business": row.business,
