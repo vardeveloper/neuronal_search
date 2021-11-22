@@ -34,6 +34,7 @@ class Question_Answer(BaseModel):
     business: str
     date_start: str
     date_end: str
+    limit: int
 
 
 def extend_rest_function(app):
@@ -167,8 +168,7 @@ def extend_rest_function(app):
                     Log.created_at.between(log.date_start, log.date_end)
                 )
                 .group_by(Log.question)
-                .limit(10)
-                .all()
+                .limit(log.limit)
             )
             if not rows:
                 return dict(status=False, message="No hay nada")
