@@ -161,16 +161,16 @@ def extend_rest_function(app):
     def report_top_log(log: Question_Answer):
         try:
             rows = (
-                db.session.query(Log, func.count(Log.question))
+                db.session.query(Log, func.count(Log.id))
                 .filter(
                     Log.business == log.business,
                     Log.question != "",
                     Log.created_at.between(log.date_start, log.date_end)
                 )
-                .group_by(Log.id)
+                .group_by(Log.question)
                 # .having(func.count(Log.question) > 10)
-                .order_by(func.count(Log.question))
-                #.limit(log.limit)
+                .order_by(func.count(Log.id))
+                .limit(log.limit)
                 .all()
             )
             if not rows:
