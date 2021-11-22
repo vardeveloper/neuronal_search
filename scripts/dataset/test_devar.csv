@@ -1,0 +1,3 @@
+business,category,subcategory,question,answer
+DEVAR,TI,KEOS,What is Neural Search?,"The core idea of neural search is to leverage state-of-the-art deep neural networks to build every component of a search system. In short, neural search is deep neural network-powered information retrieval. In academia, it’s often called neural IR."
+DEVAR,TI,,What is Jina?,Jina🔊 is a neural search framework that empowers anyone to build SOTA and scalable deep learning search applications in minutes.

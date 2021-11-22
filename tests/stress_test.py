@@ -11,8 +11,8 @@ async def request_api(session, n):
     url = URL_JINA
     headers = {"Content-Type": "application/json"}
     body = {
-        "data": ["What is Neural Search?"],
-        "parameters": {"business": "DEVAR", "origin": "chatbot"},
+        "data": ["¿Qué es un crédito Bancoppel?"],
+        "parameters": {"business": "BANCOPPEL", "origin": "chatbot"},
     }
     async with session.post(url, json=body, headers=headers) as response:
         try:

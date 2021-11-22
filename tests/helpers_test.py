@@ -115,13 +115,13 @@ def save_dataset(business):
                 print(f'Error: {e}')
 
 
-def create_dataset_test(business):
+def create_dataset_test(business, num_iterations):
     dataset = os.path.join("dataset", business + ".csv")
     with open(dataset, "w", encoding="utf-8") as f:
         field_names = ["business", "category", "subcategory", "question", "answer"]        
         dictwriter = csv.DictWriter(f, fieldnames=field_names)
         dictwriter.writeheader()
-        for _ in range(10000):
+        for _ in range(num_iterations):
             data = {
                 "business": "DEVAR",
                 "category": "TI",
@@ -145,5 +145,5 @@ def date_development():
     return date
 
 if __name__ == "__main__":
-    # create_dataset_test("test_10000")
-    print(date_development())
+    create_dataset_test("test_5000", 5000)
+    # print(date_development())
