@@ -183,6 +183,9 @@ def extend_rest_function(app):
                 print()
                 print(row)
                 print()
+                print(row[0])
+                print(row[1])
+                print()
                 document = {
                     "uuid": row.uuid,
                     "business": row.business,
