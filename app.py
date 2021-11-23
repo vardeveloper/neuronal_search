@@ -129,7 +129,7 @@ def extend_rest_function(app):
             rows = (
                 db.session.query(Log)
                 .filter(
-                    func.lower(Log.business) == log.business.lower(),
+                    Log.business == log.business.lower(),
                     Log.created_at.between(log.date_start, log.date_end)
                 )
                 .order_by(Log.id)
@@ -163,7 +163,7 @@ def extend_rest_function(app):
             rows = (
                 db.session.query(Log.question, Log.answer, func.count(Log.id).label('total'))
                 .filter(
-                    func.lower(Log.business) == log.business.lower(),
+                    Log.business == log.business.lower(),
                     Log.question != "",
                     Log.created_at.between(log.date_start, log.date_end)
                 )
@@ -198,12 +198,12 @@ def extend_rest_function(app):
             rows = (
                 db.session.query(Log.category, func.count(Log.id))
                 .filter(
-                    func.lower(Log.business) == log.business.lower(),
+                    Log.business == log.business.lower(),
                     Log.question != "",
                     Log.category != "",
                     Log.created_at.between(log.date_start, log.date_end)
                 )
-                .group_by(func.lower(Log.category))
+                .group_by(Log.category)
                 .order_by(desc(func.count(Log.id)))
                 .limit(log.limit)
                 .all()
