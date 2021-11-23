@@ -91,14 +91,13 @@ def extend_rest_function(app):
         else:
             return dict(status=True, message="Dataset saved successfully")
 
-    @app.post("/report_question_answer/", tags=["My Extended APIs"])
-    def report_question_answer(qa: Question_Answer):
+    @app.post("/get_question_answer/", tags=["My Extended APIs"])
+    def get_question_answer(qa: Question_Answer):
         try:
             rows = (
                 db.session.query(QuestionAnswer)
                 .filter(
-                    QuestionAnswer.business == qa.business,
-                    QuestionAnswer.created_at.between(qa.date_start, qa.date_end)
+                    QuestionAnswer.business == qa.business
                 )
                 .all()
             )
@@ -124,8 +123,8 @@ def extend_rest_function(app):
         else:
             return dict(status=True, data=body)
 
-    @app.post("/report_log/", tags=["My Extended APIs"])
-    def report_log(log: Question_Answer):
+    @app.post("/get_log/", tags=["My Extended APIs"])
+    def get_log(log: Question_Answer):
         try:
             rows = (
                 db.session.query(Log)
@@ -282,14 +281,14 @@ def run(args):
                 DocumentArray(
                     Document(
                         id=data,
-                        text=str(data.question),
+                        text=data.question,
                         tags={
-                            "question": str(data.question),
-                            "answer": str(data.answer),
-                            "business": str(data.business),
-                            "category": str(data.category),
-                            "subcategory": str(data.subcategory),
-                        },
+                            "question": data.question,
+                            "answer": data.answer,
+                            "business": data.business,
+                            "category": data.category,
+                            "subcategory": data.subcategory
+                        }
                     )
                     for data in rows
                 ),
