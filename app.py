@@ -200,6 +200,7 @@ def extend_rest_function(app):
                 .filter(
                     Log.business == log.business,
                     Log.question != "",
+                    Log.category != "",
                     Log.created_at.between(log.date_start, log.date_end)
                 )
                 .group_by(Log.category)
