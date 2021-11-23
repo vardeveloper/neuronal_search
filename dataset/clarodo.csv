@@ -1,5 +1,5 @@
 business,category,subcategory,question,answer
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cuáles Teléfonos de Atención tienen disponibles?,"Servicios a personas (consumidor): 
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cuáles Teléfonos de Atención tienen disponibles?,"Servicios a personas (consumidor): 
 Contáctanos al 809-220-1111 para informaciones, solicitudes y/o reclamaciones de nuestros productos y servicios. 
 Si nos llamas desde un móvil Claro en modalidad Prepago puedes comunicarte marcando *91 o desde cualquier móvil *767.  
 Horario de atención: 
@@ -7,83 +7,72 @@ Horario de atención: 
 - Domingos y días feriados de 8 a.m. a 5 p.m. 
 Todas las llamadas a nuestros números de servicio al cliente son libres de cargo desde cualquier parte del país. 
 Si te encuentras en Estados Unidos, puedes comunicarte con nosotros totalmente gratis a través del Centro de Atención Telefónico marcando el 1-866-788-6775."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Dónde puedo consultar mis deudas con Claro?,"Si quieres consultar el balance adeudado de tus servicios con Claro, solo debes entrar a tu App de Mi Claro en tu dispositivo móvil, selecciona el número de servicio, y presiona el botón de ""descargar"" facturas.
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Dónde puedo consultar mis deudas con Claro?,"Si quieres consultar el balance adeudado de tus servicios con Claro, solo debes entrar a tu App de Mi Claro en tu dispositivo móvil, selecciona el número de servicio, y presiona el botón de ""descargar"" facturas.
 También puedes hacerlo desde Mi Claro Web y descarga la factura correspondiente desde la opción de menú “Consultas” → ""Ver facturas"".
 Si no estás registrado en Mi Claro, aprende cómo hacerlo aquí:
 - ¿Cómo registrarme en Mi Claro App?
 - ¿Cómo registrarme en Mi Claro Web?
 Ahora bien, si tu servicio se encuentra cancelado, no vas a poder consultar la factura por vía de Mi Claro; en este caso debes solicitar el balance a un representante a través del Chat Claro.
 Estas consultas solo aplican para clientes pertenecientes a Claro República Dominicana."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo y dónde realizo una reclamación de mis productos o servicios en Claro?,"Puedes realizar tu reclamación a través de:
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo y dónde realizo una reclamación de mis productos o servicios en Claro?,"Puedes realizar tu reclamación a través de:
 - Claro.com.do, vía Chat Claro.
 - Llamando al 809-220-1111 para clientes Residenciales o al 809-220-1212 para clientes de Negocios.
 - Visitando uno de nuestros Centros Claro
-
 Para realizar tu reclamación debes tener en cuenta:
 - Ser el titular del servicio (si no es el titular, debe presentar una carta de autorización de la persona que desea realizar la reclamación).
 - Formalizar el reclamo en un plazo de tres (3) meses luego de ocurrido el hecho que genera la reclamación (salvo el robo de identidad).
-
 Al momento de realizar la reclamación recibirás un número de solicitud con la información del reclamo. En un plazo de 7 a 15 días recibirás respuesta. De no quedar satisfecho con la solución, tienes un plazo de 45 días para elevar tu reclamo ante el INDOTEL, llamando al 809-200-9707 o ingresando en línea al Departamento de Asistencia al Usuario
-
 Realizar una reclamación en Claro no tiene costo."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo reactivar mi número móvil o fijo si está suspendido por pago?,"Puedes reactivar tus servicios suspendidos por pago, siguiendo estos pasos según el tipo de servicio que posees:
-
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo reactivar mi número móvil o fijo si está suspendido por pago?,"Puedes reactivar tus servicios suspendidos por pago, siguiendo estos pasos según el tipo de servicio que posees:
 <strong>Para móviles:</strong>
 <ul>
-        <li>
-                <strong>Prepago: </strong>Colocando una recarga de mínimo 25 pesos.
-        </li>
-        <li>
-                <strong>Postpago: </strong>Realizando el pago de tu factura (balance pendiente) más el monto de reconexión, por cualquiera de las siguientes vías:
-                <ul>
-                        <li>
-                                <strong>Mi Claro App o Web</strong>
-                        </li>
-                        <li>
-                                Llamando a servicio al Cliente al <strong>809-220-1111</strong> opción 1
-                        </li>
-                        <li>
-                                Visitando cualquier de nuestros <a href=""https://www.claro.com.do/personas/cacs/"" target=""_blank""><strong>Centros de Atención a Clientes. Clic aquí para buscar el más cercano a ti.</strong></a>
-                        </li>
-                </ul>
-        </li>
+<li>
+<strong>Prepago: </strong>Colocando una recarga de mínimo 25 pesos.
+</li>
+<li>
+<strong>Postpago: </strong>Realizando el pago de tu factura (balance pendiente) más el monto de reconexión, por cualquiera de las siguientes vías:
+<ul>
+<li>
+<strong>Mi Claro App o Web</strong>
+</li>
+<li>
+Llamando a servicio al Cliente al <strong>809-220-1111</strong> opción 1
+</li>
+<li>
+Visitando cualquier de nuestros <a href=""https://www.claro.com.do/personas/cacs/"" target=""_blank""><strong>Centros de Atención a Clientes. Clic aquí para buscar el más cercano a ti.</strong></a>
+</li>
 </ul>
-
+</li>
+</ul>
 <strong>Para fijos:</strong>
 <ul>
-        <li>
-                Realizando el pago de tu factura (balance pendiente) más la reconexión, por cualquiera de las siguientes vías:
-                <ul>
-                        <li>
-                                <strong>Mi Claro App o Web</strong>
-                        </li>
-                        <li>
-                                Llamando a servicio al Cliente al <strong>809-220-1111</strong> opción 1
-                        </li>
-                        <li>
-                                Visitando cualquier de nuestros <a href=""https://www.claro.com.do/personas/cacs/"" target=""_blank""><strong>Centros de Atención a Clientes. Clic aquí para buscar el más cercano a ti.</strong></a>
-                        </li>
-                </ul>
-        </li>
+<li>
+Realizando el pago de tu factura (balance pendiente) más la reconexión, por cualquiera de las siguientes vías:
+<ul>
+<li>
+<strong>Mi Claro App o Web</strong>
+</li>
+<li>
+Llamando a servicio al Cliente al <strong>809-220-1111</strong> opción 1
+</li>
+<li>
+Visitando cualquier de nuestros <a href=""https://www.claro.com.do/personas/cacs/"" target=""_blank""><strong>Centros de Atención a Clientes. Clic aquí para buscar el más cercano a ti.</strong></a>
+</li>
+</ul>
+</li>
 </ul>"
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cuáles son los horarios de atención en los Centros Claro?,"Para saber la ubicación y <strong>horario</strong> exacto de cada <em>Centro Claro</em> en todo el territorio nacional, solo debes <a href=""https://www.claro.com.do/personas/servicios/promociones/horario-especial-centros-claro/"">hacer clic aqui para verlo.</a>
-
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cuáles son los horarios de atención en los Centros Claro?,"Para saber la ubicación y <strong>horario</strong> exacto de cada <em>Centro Claro</em> en todo el territorio nacional, solo debes <a href=""https://www.claro.com.do/personas/servicios/promociones/horario-especial-centros-claro/"">hacer clic aqui para verlo.</a>
 <strong>Nota</strong>: los horarios de nuestros centros de atención a clientes pueden variar en relación con los días feriados. Puedes consultar el horario especial <strong><a href=""https://www.claro.com.do/personas/servicios/promociones/"">haciendo clic aquí.</a></strong>"
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo cancelar mi paquete de Internet?,"Para cancelar tu paquete, marca desde tu móvil Prepago Claro: <strong>*91</strong>, elige la <strong>opción 5</strong> ""para soporte o reportar inconvenientes con el servicio"". Un representante te dará el soporte que necesitas.
-
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo cancelar mi paquete de Internet?,"Para cancelar tu paquete, marca desde tu móvil Prepago Claro: <strong>*91</strong>, elige la <strong>opción 5</strong> ""para soporte o reportar inconvenientes con el servicio"". Un representante te dará el soporte que necesitas.
 Si llamas desde cualquier otro servicio que no sea Prepago, puedes marcar <strong>1-809-200-3799</strong> sin costo si es un servicio de Claro, y seguir los mismos pasos que se describen arriba: marcar la <strong>opción 5</strong>.
-
 <strong>Nota</strong>: estos pasos están disponibles para móviles en modalidad prepago."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo reporto un chip robado?,"Si estás en la República Dominicana, puedes reportar tu línea llamando desde cualquier número móvil o fijo al 809-220-1111."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo reestablecer la clave de mi buzón de voz?,"Si deseas reestablecer la clave del correo de voz de tu móvil debes contactarnos al 809-220-1111 para poder asistirte.
-
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo reporto un chip robado?,"Si estás en la República Dominicana, puedes reportar tu línea llamando desde cualquier número móvil o fijo al 809-220-1111."
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo reestablecer la clave de mi buzón de voz?,"Si deseas reestablecer la clave del correo de voz de tu móvil debes contactarnos al 809-220-1111 para poder asistirte.
 Nota: Como parte de las medidas de protección del personal nuestro Centro de Atención Telefónica se encuentra funcionando con una cantidad limitada de representantes.
 Agradecemos de antemano su comprensión y paciencia por un tiempo de espera mayor al acostumbrado."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo ver mi número móvil desde mi celular?,"Puedes ver tu número marcando *369# desde tu móvil.
-
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo ver mi número móvil desde mi celular?,"Puedes ver tu número marcando *369# desde tu móvil.
 En caso de que estos pasos resulten en no mostrarte tu número, por favor llámanos al 809-220-1111 o marca *91 si tu servicio es Prepago."
-CLARODO,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo saber mi número de contrato?,"Es muy fácil saber tu número de contrato (o ""cuenta"") si tienes a mano la factura de tu servicio. Revisa la parte superior a la izquierda de tu factura, donde dice ""cuenta"".
+clarodo,Servicio al cliente,Canales y Centros de servicio,¿Cómo puedo saber mi número de contrato?,"Es muy fácil saber tu número de contrato (o ""cuenta"") si tienes a mano la factura de tu servicio. Revisa la parte superior a la izquierda de tu factura, donde dice ""cuenta"".
 Recuerda que tienes la opción de descargar las facturas de tus servicios a través de Mi Claro APP o llamándonos al 809-220-1111.
 Si deseas entender mejor la factura de tu servicio Claro, haz clic en la pregunta que verás debajo.
-
 Nota: tu contrato NO aparece como “numero de contrato”, sino como “Cuenta”."
