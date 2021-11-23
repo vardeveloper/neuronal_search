@@ -268,6 +268,7 @@ def run(args):
     if os.getenv("DATASET_SOURCE") == "CSV":
         with f:
             if args.index_data_url == "cajatacna": 
+                default_logger.info(f'Info: {args.index_data_url}')
                 with open(os.path.join("dataset", 'cajatacna.csv')) as fp:
                     f.index(
                         from_csv(fp, field_resolver={"question": "text"}),
