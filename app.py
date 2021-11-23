@@ -157,8 +157,8 @@ def extend_rest_function(app):
         else:
             return dict(status=True, data=body)
 
-    @app.post("/report_top_log/", tags=["My Extended APIs"])
-    def report_top_log(log: Question_Answer):
+    @app.post("/report_top_question/", tags=["My Extended APIs"])
+    def report_top_question(log: Question_Answer):
         try:
             rows = (
                 db.session.query(Log.question, Log.answer, func.count(Log.id).label('total'))
@@ -182,6 +182,39 @@ def extend_rest_function(app):
                     "question": row[0],
                     "answer": row[1],
                     "total": row[2]
+                }
+                data.append(document)
+            body = {"data": data}
+
+        except Exception as e:
+            default_logger.error(f'Error: {e}')
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, data=body)
+
+    @app.post("/report_top_category/", tags=["My Extended APIs"])
+    def report_top_category(log: Question_Answer):
+        try:
+            rows = (
+                db.session.query(Log.category, func.count(Log.id))
+                .filter(
+                    Log.business == log.business,
+                    Log.question != "",
+                    Log.created_at.between(log.date_start, log.date_end)
+                )
+                .group_by(Log.category)
+                .order_by(desc(func.count(Log.id)))
+                .limit(log.limit)
+                .all()
+            )
+            if not rows:
+                return dict(status=False, message="No hay nada")
+
+            data = []
+            for row in rows:
+                document = {
+                    "category": row[0],
+                    "total": row[1]
                 }
                 data.append(document)
             body = {"data": data}

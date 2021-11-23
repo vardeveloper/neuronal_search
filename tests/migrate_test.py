@@ -21,12 +21,12 @@ def run():
     """
     )
     print("Result 1: ", result)
-    print()
-    stmt = select(Log.question, func.count(Log.id)).\
-             group_by(Log.question)
-             # having(func.length(Log.question) > 4)
-    result2 = db.engine.execute(stmt).fetchall()
-    print("Result 2: ", result2)
+    # print()
+    # stmt = select(Log.question, func.count(Log.id)).\
+    #          group_by(Log.question)
+    #          # having(func.length(Log.question) > 4)
+    # result2 = db.engine.execute(stmt).fetchall()
+    # print("Result 2: ", result2)
 
 
 if __name__ == "__main__":
