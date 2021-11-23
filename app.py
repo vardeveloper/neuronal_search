@@ -267,12 +267,19 @@ def run(args):
 
     if os.getenv("DATASET_SOURCE") == "CSV":
         with f:
-            for dataset in glob.iglob(os.path.join("dataset", "*.csv")):
-                with open(dataset) as fp:
+            if args.index_data_url == "cajatacna": 
+                with open(os.path.join("dataset", 'cajatacna.csv')) as fp:
                     f.index(
                         from_csv(fp, field_resolver={"question": "text"}),
                         show_progress=True
                     )
+            else:
+                for dataset in glob.iglob(os.path.join("dataset", "*.csv")):
+                    with open(dataset) as fp:
+                        f.index(
+                            from_csv(fp, field_resolver={"question": "text"}),
+                            show_progress=True
+                        )
             f.block()
 
     if os.getenv("DATASET_SOURCE") == "DB":
