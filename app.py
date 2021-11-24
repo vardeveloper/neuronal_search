@@ -231,7 +231,7 @@ def extend_rest_function(app):
         try:
             rows = (
                 db.session.query(
-                    Model_Feedback.uuid,
+                    Model_Feedback.qualification,
                     Log.question,
                     Log.answer,
                     func.count(Model_Feedback.id)
@@ -241,7 +241,7 @@ def extend_rest_function(app):
                     Log.business == log.business.lower(),
                     Log.created_at.between(log.date_start, log.date_end)
                 )
-                .group_by(Model_Feedback.uuid, Log.question, Log.answer)
+                .group_by(Model_Feedback.qualification, Log.question, Log.answer)
                 .order_by(desc(func.count(Model_Feedback.id)))
                 .limit(log.limit)
                 .all()
