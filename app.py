@@ -239,7 +239,8 @@ def extend_rest_function(app):
                 .filter(
                     Model_Feedback.qualification == True,
                     Log.business == log.business.lower(),
-                    Log.created_at.between(log.date_start, log.date_end)
+                    Log.created_at.between(log.date_start, log.date_end),
+                    Log.question != ""
                 )
                 .group_by(Model_Feedback.qualification, Log.question, Log.answer)
                 .order_by(desc(func.count(Model_Feedback.id)))
@@ -308,10 +309,7 @@ def run(args):
     if os.getenv("DATASET_SOURCE") == "CSV":
         with f:
             for dataset in glob.iglob(os.path.join("dataset", "*.csv")):
-                default_logger.info("********************************")
-                default_logger.info(f'dataset: {dataset}')
-                default_logger.info("********************************")
-                default_logger.success(f'dataset: {dataset}')
+                default_logger.info(f'[ {dataset} ]')
                 with open(dataset) as fp:
                     f.index(
                         from_csv(fp, field_resolver={"question": "text"}),
