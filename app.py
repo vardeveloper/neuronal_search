@@ -226,6 +226,46 @@ def extend_rest_function(app):
         else:
             return dict(status=True, data=body)
 
+    @app.post("/report_top_feedback/", tags=["My Extended APIs"])
+    def report_top_feedback(log: Question_Answer):
+        try:
+            rows = (
+                db.session.query(
+                    Model_Feedback.uuid,
+                    Log.question,
+                    Log.answer,
+                    func.count(Model_Feedback.id)
+                )
+                .filter(
+                    Model_Feedback.qualification == True,
+                    Log.business == log.business.lower(),
+                    Log.created_at.between(log.date_start, log.date_end)
+                )
+                .group_by(Model_Feedback.uuid, Log.question, Log.answer)
+                .order_by(desc(func.count(Model_Feedback.id)))
+                .limit(log.limit)
+                .all()
+            )
+            if not rows:
+                return dict(status=False, message="No hay nada")
+
+            data = []
+            for row in rows:
+                document = {
+                    "uuid": row[0],
+                    "question": row[1],
+                    "answer": row[2],
+                    "total": row[3]
+                }
+                data.append(document)
+            body = {"data": data}
+
+        except Exception as e:
+            default_logger.error(f'Error: {e}')
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, data=body)
+
     return app
 
 
