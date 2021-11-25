@@ -15,6 +15,7 @@ from jina.types.document.generators import from_csv
 from executors.executors import MyTransformer, MyIndexer
 
 from sqlalchemy import desc, func
+from typing import Optional
 from pydantic import BaseModel
 import db
 from models import Feedback as Model_Feedback, QuestionAnswer, Log
@@ -35,6 +36,7 @@ class Question_Answer(BaseModel):
     date_start: str
     date_end: str
     limit: int
+    qualification: Optional[bool] = True
 
 
 def extend_rest_function(app):
@@ -232,7 +234,7 @@ def extend_rest_function(app):
             sub_query = (
                 db.session.query(Model_Feedback.uuid)
                 .filter(
-                    Model_Feedback.qualification == True,
+                    Model_Feedback.qualification == log.qualification,
                     Log.uuid == Model_Feedback.uuid,
                 )
                 .label("feedback_uuid")
