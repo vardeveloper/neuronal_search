@@ -8,7 +8,7 @@ from sqlalchemy import desc, func, select
 from models import Log, Feedback
 
 
-def get_query():
+def get_query_a():
     sub_query = (
         db.session.query(Feedback.uuid)
         .filter(
@@ -18,10 +18,7 @@ def get_query():
         .label("count")
     )
     rows = (
-        db.session.query(
-            Log.question,
-            func.count(sub_query)
-        )
+        db.session.query(Log.question, func.count(sub_query))
         .filter(
             Log.business == "bancoppel",
             Log.created_at.between("2021-11-01 00:00:00", "2021-11-30 23:59:59"),
@@ -34,7 +31,7 @@ def get_query():
     return rows
 
 
-def run():
+def get_query_b():
     # result = db.engine.execute("ALTER TABLE public.log ADD search TEXT")
     result = db.engine.execute(
         """
@@ -49,12 +46,21 @@ def run():
         LIMIT 10
     """
     )
-    # stmt = select(Log.question, func.count(Log.id)).\
-    #          group_by(Log.question)
-    #          # having(func.length(Log.question) > 4)
-    # result2 = db.engine.execute(stmt).fetchall()
-    # print("Result 2: ", result2)
     return result
+
+
+def get_query_c():
+    stmt = (
+        select(Log.question, func.count(Log.id))
+        .group_by(Log.question)
+        .having(func.length(Log.question) > 4)
+    )
+    result = db.engine.execute(stmt).fetchall()
+    return result
+
+
+def run():
+    result = db.engine.execute("ALTER TABLE public.log ADD search TEXT")
 
 
 if __name__ == "__main__":
