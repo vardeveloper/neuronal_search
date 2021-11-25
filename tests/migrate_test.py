@@ -65,6 +65,4 @@ def run():
 
 if __name__ == "__main__":
     print()
-    print("QUERY A: ", get_query_a())
-    print()
     print([x for x in get_query_a()])
