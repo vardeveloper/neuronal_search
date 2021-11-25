@@ -25,7 +25,7 @@ def get_query_a():
         )
         .group_by(Log.question)
         .order_by(desc(func.count(sub_query)))
-        .limit(20)
+        .limit(10)
         .all()
     )
     return rows
@@ -64,6 +64,7 @@ def run():
 
 
 if __name__ == "__main__":
-    print("QUERY: ", get_query())
     print()
-    print([x for x in get_query()])
+    print("QUERY A: ", get_query_a())
+    print()
+    print([x for x in get_query_a()])
