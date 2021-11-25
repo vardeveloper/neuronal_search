@@ -229,24 +229,29 @@ def extend_rest_function(app):
     @app.post("/report_top_feedback/", tags=["My Extended APIs"])
     def report_top_feedback(log: Question_Answer):
         try:
-            rows = (
-                db.session.query(
-                    Model_Feedback.qualification,
-                    Log.question,
-                    Log.answer,
-                    func.count(Model_Feedback.id)
-                )
+            sub_query = (
+                db.session.query(Model_Feedback.uuid)
                 .filter(
                     Model_Feedback.qualification == True,
+                    Log.uuid == Model_Feedback.uuid,
+                )
+                .label("feedback_uuid")
+            )
+            rows = (
+                db.session.query(
+                    Log.question,
+                    func.count(sub_query)
+                )
+                .filter(
                     Log.business == log.business.lower(),
                     Log.created_at.between(log.date_start, log.date_end),
-                    Log.question != ""
                 )
-                .group_by(Model_Feedback.qualification, Log.question, Log.answer)
-                .order_by(desc(func.count(Model_Feedback.id)))
-                .limit(log.limit)
+                .group_by(Log.question)
+                .order_by(desc(func.count(sub_query)))
+                .limit(20)
                 .all()
             )
+
             if not rows:
                 return dict(status=False, message="No hay nada")
 
