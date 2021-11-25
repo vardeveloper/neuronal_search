@@ -258,10 +258,8 @@ def extend_rest_function(app):
             data = []
             for row in rows:
                 document = {
-                    "uuid": row[0],
-                    "question": row[1],
-                    "answer": row[2],
-                    "total": row[3]
+                    "question": row[0],
+                    "total": row[1]
                 }
                 data.append(document)
             body = {"data": data}
