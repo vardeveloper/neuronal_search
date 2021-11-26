@@ -112,7 +112,7 @@ def generate_search_terms_file(business, date_start, date_end):
 
 
 def generate_wordcloud(business, limit):
-    # import nltk
+    import nltk
     from nltk.corpus import stopwords
     from wordcloud import WordCloud, STOPWORDS
 
