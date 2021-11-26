@@ -121,7 +121,7 @@ def generate_wordcloud(business, limit):
     text = open(os.path.join("dataset", text_words)).read()
 
     # set stopwords
-    # nltk.download('stopwords') # download only once
+    nltk.download('stopwords') # download only once
     stop_words_sp = set(stopwords.words('spanish'))
 
     # create the wordcloud object
