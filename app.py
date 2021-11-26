@@ -285,12 +285,11 @@ def extend_rest_function(app):
                     "cantidad": c
                 }
                 data.append(d)
-            body = {"data": data}
         except Exception as e:
             default_logger.error(f'Error: {e}')
             return dict(status=False, message=str(e))
         else:
-            return dict(status=True, data=body)
+            return dict(status=True, data=data)
 
     return app
 

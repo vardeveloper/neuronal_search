@@ -8,6 +8,10 @@ import db
 from models import QuestionAnswer, Log
 from sqlalchemy import desc, func
 
+import nltk
+from nltk.corpus import stopwords
+from wordcloud import WordCloud, STOPWORDS
+
 
 _slugify_strip_re = re.compile(r"[^\w\s-]")
 _slugify_hyphenate_re = re.compile(r"[-\s]+")
@@ -97,7 +101,7 @@ def generate_search_terms_file(business, date_start, date_end):
     with open(dataset, "w", encoding="utf-8") as f:
         try:
             search = (
-                db.session.query(func.lower(Log.search))
+                db.session.query(func.lower(Log.search).label('search'))
                 .filter(
                     Log.business == business,
                     Log.created_at.between(date_start, date_end),
@@ -112,10 +116,6 @@ def generate_search_terms_file(business, date_start, date_end):
 
 
 def generate_wordcloud(business, limit):
-    import nltk
-    from nltk.corpus import stopwords
-    from wordcloud import WordCloud, STOPWORDS
-
     # Read the whole text.
     text_words = business + "_search_terms.txt"
     text = open(os.path.join("dataset", text_words)).read()
@@ -129,7 +129,6 @@ def generate_wordcloud(business, limit):
 
     # create a dictionary of word frequencies
     text_dictionary = wordcloud.process_text(text)
-    # print(text_dictionary)
 
     # sort the dictionary
     word_freq = {
@@ -137,12 +136,6 @@ def generate_wordcloud(business, limit):
         for k, v in sorted(text_dictionary.items(), reverse=True, key=lambda item: item[1])
     }
 
-    # use words_ to print relative word frequencies
-    rel_freq = wordcloud.words_
-
-    # print results
-    # print(list(word_freq.items())[:10])
-    # print(list(rel_freq.items())[:10])
     return list(word_freq.items())[:limit]
 
 

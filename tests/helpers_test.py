@@ -14,6 +14,7 @@ import sys
 sys.path.append("../seeker-jina-lucca")
 import db
 from models import QuestionAnswer, Log
+from sqlalchemy import desc, func
 
 
 _slugify_strip_re = re.compile(r"[^\w\s-]")
@@ -158,7 +159,7 @@ def generate_search_terms_file(business, date_start, date_end):
     with open(dataset, "w", encoding="utf-8") as f:
         try:
             search = (
-                db.session.query(func.lower(Log.search))
+                db.session.query(func.lower(Log.search).label('search'))
                 .filter(
                     Log.business == business,
                     Log.created_at.between(date_start, date_end),
@@ -173,7 +174,7 @@ def generate_search_terms_file(business, date_start, date_end):
 
 
 def generate_wordcloud(business, limit):
-    # import nltk
+    import nltk
     from nltk.corpus import stopwords
     from wordcloud import WordCloud, STOPWORDS
 
@@ -182,7 +183,7 @@ def generate_wordcloud(business, limit):
     text = open(os.path.join("dataset", text_words)).read()
 
     # set stopwords
-    # nltk.download('stopwords') # download only once
+    nltk.download('stopwords') # download only once
     stop_words_sp = set(stopwords.words('spanish'))
 
     # create the wordcloud object
