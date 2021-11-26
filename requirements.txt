@@ -2,3 +2,5 @@ jina[devel]==2.0.*
 torch
 transformers
 psycopg2-binary
+nltk
+wordcloud
