@@ -19,7 +19,7 @@ from typing import Optional
 from pydantic import BaseModel
 import db
 from models import Feedback as Model_Feedback, QuestionAnswer, Log
-from helpers import make_categories_json, save_dataset
+from helpers import make_categories_json, save_dataset, generate_search_terms_file, generate_wordcloud
 
 
 class Feedback(BaseModel):
@@ -250,7 +250,7 @@ def extend_rest_function(app):
                 )
                 .group_by(Log.question)
                 .order_by(desc(func.count(sub_query)))
-                .limit(20)
+                .limit(log.limit)
                 .all()
             )
 
@@ -266,6 +266,26 @@ def extend_rest_function(app):
                 data.append(document)
             body = {"data": data}
 
+        except Exception as e:
+            default_logger.error(f'Error: {e}')
+            return dict(status=False, message=str(e))
+        else:
+            return dict(status=True, data=body)
+
+    @app.post("/top_words/", tags=["My Extended APIs"])
+    def top_searched_words(qa: Question_Answer):
+        try:
+            generate_search_terms_file(qa.business.lower(), qa.date_start, qa.date_end)
+            top_words = generate_wordcloud(qa.business.lower(), qa.limit)
+            data = []
+            for word in top_words:
+                w, c = word
+                d = {
+                    "word": w,
+                    "cantidad": c
+                }
+                data.append(d)
+            body = {"data": data}
         except Exception as e:
             default_logger.error(f'Error: {e}')
             return dict(status=False, message=str(e))
