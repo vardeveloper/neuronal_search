@@ -49,7 +49,7 @@ Thumbs.db
 *.wmv
 
 # project files
-venv
+venv*
 auto_model
 auto_tokenizer
 .vscode
@@ -58,3 +58,4 @@ data
 tmp_flow.svg
 # dataset
 .env
+flow.svg

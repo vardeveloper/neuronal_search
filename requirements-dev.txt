@@ -8,7 +8,7 @@ pretty_errors
 pipdeptree
 
 # PACKAGES APP
-jina[devel]==2.0.*
+jina[devel]
 torch
 transformers
 psycopg2-binary
