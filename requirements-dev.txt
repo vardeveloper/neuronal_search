@@ -1,3 +1,4 @@
+# PACKAGES ENV DEV
 flake8
 isort
 black
@@ -5,3 +6,11 @@ mypy
 bandit
 pretty_errors
 pipdeptree
+
+# PACKAGES APP
+jina[devel]==2.0.*
+torch
+transformers
+psycopg2-binary
+nltk
+wordcloud

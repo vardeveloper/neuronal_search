@@ -1,6 +1,7 @@
-jina[devel]==2.0.*
-torch
-transformers
-psycopg2-binary
-nltk
-wordcloud
+jina==2.5.*
+torch==1.10.0
+transformers==4.12.5
+psycopg2-binary==2.9.2
+SQLAlchemy==1.4.27
+wordcloud==1.8.1
+nltk==3.6.5
