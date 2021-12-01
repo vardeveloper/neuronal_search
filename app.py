@@ -299,7 +299,7 @@ def _get_flow(args):
     return (
         Flow(cors=True, protocol="http", port_expose=8000)
         .add(uses=MyTransformer, replicas=os.getenv("FLOW_EXECUTOR_REPLICAS"), timeout_ready=-1)
-        .add(uses=MyIndexer, workspace=args.workdir)
+        .add(uses=MyIndexer, workspace=args.workdir, replicas=os.getenv("FLOW_EXECUTOR_REPLICAS"))
         .plot('flow.svg')
     )
 
