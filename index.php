@@ -1,10 +1,18 @@
 <?php
 
-// php -S 127.0.0.1:8080 index.php
-
 ########################
 ### API Intermediate ###
 ########################
+
+// php -S 127.0.0.1:8080 index.php
+
+define("TOKEN", "Bearer bbf9537bc4b6b0a40c6665967cb9f759620cd611");
+
+if ($_SERVER['HTTP_AUTHORIZATION'] != TOKEN) {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(array('status' => FALSE, 'message' => 'El TOKEN es incorrecto'));
+    exit();
+}
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = str_replace("/index.php/", "", $path);
