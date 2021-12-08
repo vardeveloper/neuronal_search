@@ -15,7 +15,7 @@ if ($_SERVER['HTTP_AUTHORIZATION'] != TOKEN) {
 }
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$path = str_replace("/index.php/", "", $path);
+$path = str_replace("/apisearch/index.php/", "", $path);
 $path = str_replace("/", "", $path);
 
 if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0) {
