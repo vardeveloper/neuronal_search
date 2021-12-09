@@ -75,7 +75,7 @@ def extend_rest_function(app):
             dataset = os.path.join("dataset", category.business.lower() + ".csv")
             if not os.path.isfile(dataset):
                 return dict(status=False, message=f"Dataset {category.business.lower()}.csv no exists!")
-            make_categories_json(category.business, dataset)
+            make_categories_json(category.business.lower(), dataset)
         except Exception as e:
             return dict(status=False, message=str(e))
         else:
