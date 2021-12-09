@@ -62,7 +62,7 @@ def make_categories_json(business, csvFilePath):
 
         data = dict(categories=list_category)
 
-    jsonFilePath = os.path.join("dataset", business.lower() + ".json")
+    jsonFilePath = os.path.join("dataset", business + ".json")
     with open(jsonFilePath, "w", encoding="utf-8") as jsonf:
         jsonf.write(json.dumps(data, indent=4))
 
