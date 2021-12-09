@@ -6,9 +6,9 @@
 
 // php -S 127.0.0.1:8080 index.php
 
-define("TOKEN", "Bearer bbf9537bc4b6b0a40c6665967cb9f759620cd611");
-
-if ($_SERVER['HTTP_AUTHORIZATION'] != TOKEN) {
+$TOKEN = "Bearer bbf9537bc4b6b0a40c6665967cb9f759620cd611";
+$headers = getallheaders();
+if ($headers["Authorization"] != $TOKEN) {
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode(array('status' => FALSE, 'message' => 'El TOKEN es incorrecto'));
     exit();
