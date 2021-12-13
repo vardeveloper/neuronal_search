@@ -1,15 +1,20 @@
 <?php
 
+// php -S 127.0.0.1:8080 index.php
+
 ########################
 ### API Intermediate ###
 ########################
 
-// php -S 127.0.0.1:8080 index.php
+// HEADERS
+header("Access-Control-Allow-Origin: *"); // CORS
+header("Access-Control-Allow-Headers: *"); // CORS
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // CORS
+header('Content-Type: application/json; charset=utf-8');
 
 $TOKEN = "Bearer bbf9537bc4b6b0a40c6665967cb9f759620cd611";
 $headers = getallheaders();
 if ($headers["Authorization"] != $TOKEN) {
-    header('Content-Type: application/json; charset=utf-8');
     echo json_encode(array('status' => FALSE, 'message' => 'El TOKEN es incorrecto'));
     exit();
 }
@@ -55,11 +60,7 @@ if ($response === FALSE) {
 // close curl
 curl_close($ch);
 
-// HEADERS
-header("Access-Control-Allow-Origin: *"); // CORS
-header("Access-Control-Allow-Headers: *"); // CORS
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // CORS
-header('Content-Type: application/json; charset=utf-8');
+// format response
 if ($path == 'docs') {
     header('Content-Type: text/html; charset=utf-8');
 }
