@@ -72,7 +72,7 @@ if (isset($data_array["parameters"]["origin"]) && $data_array["parameters"]["ori
         if (empty($docs['matches'])) {
             echo json_encode(array('status' => FALSE, 'message' => 'No hay coincidencias'));
         } else {
-            $docs['matches'][0]['tags']['answer'] = $docs['matches'][0]['tags']['answer'] . "\n\n¿Deseas realizar otra consulta?";
+            //$docs['matches'][0]['tags']['answer'] = $docs['matches'][0]['tags']['answer'] . "\n\n¿Deseas realizar otra consulta?";
             echo json_encode($docs['matches'][0]['tags']);
         }
     } else {
