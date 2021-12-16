@@ -11,10 +11,10 @@ virgin,Pagos,Help,¿Cómo saber si mi tarjeta sirve para suscribir?,"- Tarjetas 
 - Tarjetas débito con CVV o CVC: Aceptamos las tarjetas de Bancolombia y Rappi."
 virgin,Pagos,Help,¿Puedo suscribir más de una línea con mi tarjeta?,"¡Sí! solo necesitas tener 1 tarjeta guardada y encender el débito automático de las líneas que estén vinculadas a tu cuenta.<br>
 En la parte superior al lado de tu nombre verifica y selecciona la línea que quieres suscribir."
-virgin,Renovacion,Help,¿Cómo puedo saber cuándo se va a renovar mi plan?,En la sección de “Mis Recursos” puedes ver hasta las 4 próximas fechas y horas en las que se renueva tu producto.
-virgin,Suscripcion,Help,¿Si tengo mi plan suscrito y activo un plan por otro canal pierdo la promoción?,"No pierdes la promoción de tu producto suscrito, sin embargo quedas con 2 productos activos simultáneamente."
-virgin,Suscripcion,Help,¿Por qué canales puedo activar mi suscripción?,"A través de la página web desde tu computador o celular, desde app y también marcando a través de tu celular en el *111# opción 2 en Planes de 30 días, eliges el que quieras y sigue los pasos."
-virgin,Suscripcion,Help,¿Por qué puedo perder la promoción?,Puedes llegar a perder tu promoción de suscripción si desactivas tu débito automático o también si en el momento del cobro no tienes saldo suficiente en tu tarjeta o se encuentra alguna falla relacionada a tu tarjeta guardada.
+virgin,Renovación,Help,¿Cómo puedo saber cuándo se va a renovar mi plan?,En la sección de “Mis Recursos” puedes ver hasta las 4 próximas fechas y horas en las que se renueva tu producto.
+virgin,Suscripción,Help,¿Si tengo mi plan suscrito y activo un plan por otro canal pierdo la promoción?,"No pierdes la promoción de tu producto suscrito, sin embargo quedas con 2 productos activos simultáneamente."
+virgin,Suscripción,Help,¿Por qué canales puedo activar mi suscripción?,"A través de la página web desde tu computador o celular, desde app y también marcando a través de tu celular en el *111# opción 2 en Planes de 30 días, eliges el que quieras y sigue los pasos."
+virgin,Suscripción,Help,¿Por qué puedo perder la promoción?,Puedes llegar a perder tu promoción de suscripción si desactivas tu débito automático o también si en el momento del cobro no tienes saldo suficiente en tu tarjeta o se encuentra alguna falla relacionada a tu tarjeta guardada.
 virgin,Pagos,Help,Al momento de validar tu tarjeta se cobra $100 o $1000 ¿Ese dinero se devuelve?,"Si tu tarjeta es de crédito se validará que tenga fondos suficientes haciendo un cobro de $100 que se devolverán a tu tarjeta.<br>
 Si tu tarjeta es débito con CVV o CVC, se validará que tenga fondos suficientes haciendo un cobro de $1.000 que se devolverán a tu tarjeta."
 virgin,Plan,Help,¿Cuánto tiempo se demora en activar por primera vez el plan?,"Si es la primera vez que suscribes tu producto, tardaremos 10 minutos máximo en realizar el cobro para que puedas disfrutar de este.<br>
@@ -22,9 +22,9 @@ Si ya tienes un producto activo y programado e hiciste el cambio por otro, recue
 virgin,Plan,Help,¿Qué pasa si tengo un plan activo pero quiero programar el débito automático para suscribirlo?,"Ingresa o regístrate en la página web y en la sección de “Guardar Tarjeta” realiza el proceso solicitado para que enciendas el débito automático de tu plan actual, inmediatamente tu producto quedará suscrito pero el cobro del producto se realizaría en cuanto finalice la vigencia del producto que tienes actualmente."
 virgin,Saldos,Help,¿Qué debo hacer si tengo un adelanto de saldo en mi línea?,"Debes tener el valor disponible en tu tarjeta guardada para pagar el Plan y el adelanto que solicitaste en el momento que se realice el débito automático. <br>
 Ejemplo si tu Plan es de $40.000 y solicitaste adelanto por $2.000 debes tener $42.200 en tu tarjeta para que la transacción sea efectiva."
-virgin,Suscripcion,Help,¿Qué es suscripción?,"Es asociar tu tarjeta débito con CVV o crédito para que automáticamente mes a mes se descuente el valor de tu plan. Así como lo haces con tus aplicaciones de pelis o música.<br>
+virgin,Suscripción,Help,¿Qué es suscripción?,"Es asociar tu tarjeta débito con CVV o crédito para que automáticamente mes a mes se descuente el valor de tu plan. Así como lo haces con tus aplicaciones de pelis o música.<br>
 <a href=""https://www.youtube.com/watch?v=_eMWJzh1rEs"" target=""_blank"">https://www.youtube.com/watch?v=_eMWJzh1rEs</a>"
-virgin,Suscripcion,Help,¿Cómo te puedes suscribir?,"1. Ingresa o Regístrate con tu usuario y contraseña aquí en nuestra página web.<br>
+virgin,Suscripción,Help,¿Cómo te puedes suscribir?,"1. Ingresa o Regístrate con tu usuario y contraseña aquí en nuestra página web.<br>
 2. Ve a la sección de Guardar tarjeta y selecciona la tarjeta crédito o débito con CVV (link a definición o tooltip) de la cual quieres que se descuente el pago automático de tu plan, recuerda que debes tenerla a la mano. <br>
 3. Ingresa los datos de tu tarjeta, verifica que estén correctos y guárdalos. No te preocupes, tu información estará segura en todo momento. <br>
 4. Ahora puedes ir a programar el débito automático de tu producto. <br><br>
