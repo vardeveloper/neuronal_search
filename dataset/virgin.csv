@@ -23,15 +23,18 @@ virgin,Plan,Help,¿Qué pasa si tengo un plan activo pero quiero programar el d�
 virgin,Saldos,Help,¿Qué debo hacer si tengo un adelanto de saldo en mi línea?,"Debes tener el valor disponible en tu tarjeta guardada para pagar el Plan y el adelanto que solicitaste en el momento que se realice el débito automático. <br>
 Ejemplo si tu Plan es de $40.000 y solicitaste adelanto por $2.000 debes tener $42.200 en tu tarjeta para que la transacción sea efectiva."
 virgin,Suscripción,Help,¿Qué es suscripción?,"Es asociar tu tarjeta débito con CVV o crédito para que automáticamente mes a mes se descuente el valor de tu plan. Así como lo haces con tus aplicaciones de pelis o música.<br>
-<a href=""https://www.youtube.com/watch?v=_eMWJzh1rEs"" target=""_blank"">https://www.youtube.com/watch?v=_eMWJzh1rEs</a>"
+<iframe width=""560"" height=""315"" src=""https://www.youtube.com/embed/_eMWJzh1rEs?controls=0"" title=""YouTube video player"" frameborder=""0"" allow=""accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"" allowfullscreen></iframe>"
 virgin,Suscripción,Help,¿Cómo te puedes suscribir?,"1. Ingresa o Regístrate con tu usuario y contraseña aquí en nuestra página web.<br>
 2. Ve a la sección de Guardar tarjeta y selecciona la tarjeta crédito o débito con CVV (link a definición o tooltip) de la cual quieres que se descuente el pago automático de tu plan, recuerda que debes tenerla a la mano. <br>
 3. Ingresa los datos de tu tarjeta, verifica que estén correctos y guárdalos. No te preocupes, tu información estará segura en todo momento. <br>
 4. Ahora puedes ir a programar el débito automático de tu producto. <br><br>
+
 Si no tienes Plan activo Agrega (+) el plan que prefieras. <br>
 1. Elige en qué fecha quieres que te descuenten y en cuantas cuotas. <br>
 2. Da clic en programar este producto y LISTO!! En máximo 10 minutos tendrás tu Plan activo. <br><br>
+
 Si ya tienes un Plan activo Enciende (ON) en tu Plan. <br>
 1. Este se renovará automáticamente cuando finalice la vigencia del Plan que tienes actualmente. <br><br>
-Demo: <a href=""https://www.youtube.com/watch?v=_ymTUECp-Uo"" target=""_blank"">https://www.youtube.com/watch?v=_ymTUECp-Uo</a>"
+
+<iframe width=""560"" height=""315"" src=""https://www.youtube.com/embed/_ymTUECp-Uo?controls=0"" title=""YouTube video player"" frameborder=""0"" allow=""accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"" allowfullscreen></iframe>"
 virgin,Pagos,Help,"El CVV, CVC o Código de seguridad de una tarjeta","Son 3 dígitos que se le asignan a tu tarjeta, para que tus compras online sean más seguras. Normalmente estos dígitos eran exclusivos para las tarjetas de crédito pero ahora también lo tienen las tarjetas débito. (Si la tuya no lo tiene consúltalo con tu entidad bancaria)"
