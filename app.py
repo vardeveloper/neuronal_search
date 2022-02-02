@@ -6,11 +6,14 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 import jina.helper
-from jina import Flow, Document, DocumentArray
+from jina import Flow
+from jina import Document, DocumentArray
+# from docarray import Document, DocumentArray
+
 from jina.importer import ImportExtensions
 from jina.logging.predefined import default_logger
 from jina.parsers.helloworld import set_hw_chatbot_parser
-from jina.types.document.generators import from_csv
+# from jina.types.document.generators import from_csv
 
 from executors.executors import MyTransformer, MyIndexer
 
@@ -336,7 +339,7 @@ def run(args):
                 default_logger.info(f'[ {dataset} ]')
                 with open(dataset) as fp:
                     f.index(
-                        from_csv(fp, field_resolver={"question": "text"}),
+                        DocumentArray.from_csv(fp, field_resolver={"question": "text"}),
                         show_progress=True
                     )
             f.block()

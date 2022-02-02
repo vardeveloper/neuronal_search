@@ -1,14 +1,13 @@
 import os
+from typing import Dict, Tuple
 from uuid import uuid4
-
-from typing import Optional, Dict, Tuple
 
 import numpy as np
 import torch
-from transformers import AutoModel, AutoTokenizer, MPNetConfig
+from transformers import AutoModel, AutoTokenizer
 
-from jina import Executor, DocumentArray, requests, Document
-from jina.types.arrays.memmap import DocumentArrayMemmap
+from jina import Executor, requests
+from docarray import Document, DocumentArray
 from jina.logging.predefined import default_logger
 
 import db
@@ -19,84 +18,63 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class MyTransformer(Executor):
-    """Transformer executor class"""
+    """Transformer executor class """
 
     def __init__(
         self,
         pretrained_model_name_or_path: str = "sentence-transformers/multi-qa-mpnet-base-cos-v1",
-        base_tokenizer_model: Optional[str] = None,
         pooling_strategy: str = "mean",
         layer_index: int = -1,
-        max_length: Optional[int] = None,
-        acceleration: Optional[str] = None,
-        embedding_fn_name: str = "__call__",
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
         self.pretrained_model_name_or_path = pretrained_model_name_or_path
-        self.base_tokenizer_model = (
-            base_tokenizer_model or pretrained_model_name_or_path
-        )
         self.pooling_strategy = pooling_strategy
         self.layer_index = layer_index
-        self.max_length = max_length
-        self.acceleration = acceleration
-        self.embedding_fn_name = embedding_fn_name
         self.tokenizer = AutoTokenizer.from_pretrained(
-            self.base_tokenizer_model, cache_dir="auto_tokenizer", config=MPNetConfig()
+            self.pretrained_model_name_or_path
         )
         self.model = AutoModel.from_pretrained(
-            self.pretrained_model_name_or_path,
-            output_hidden_states=True,
-            cache_dir="auto_model",
+            self.pretrained_model_name_or_path, output_hidden_states=True
         )
-        self.model.to(torch.device("cpu"))
+        self.model.to(torch.device('cpu'))
 
-    def _compute_embedding(self, hidden_states: "torch.Tensor", input_tokens: Dict):
-        import torch
+    def _compute_embedding(self, hidden_states: 'torch.Tensor', input_tokens: Dict):
 
-        fill_vals = {"cls": 0.0, "mean": 0.0, "max": -np.inf, "min": np.inf}
+        fill_vals = {'cls': 0.0, 'mean': 0.0, 'max': -np.inf, 'min': np.inf}
         fill_val = torch.tensor(
-            fill_vals[self.pooling_strategy], device=torch.device("cpu")
+            fill_vals[self.pooling_strategy], device=torch.device('cpu')
         )
 
         layer = hidden_states[self.layer_index]
-        attn_mask = input_tokens["attention_mask"].unsqueeze(-1).expand_as(layer)
+        attn_mask = input_tokens['attention_mask'].unsqueeze(-1).expand_as(layer)
         layer = torch.where(attn_mask.bool(), layer, fill_val)
 
         embeddings = layer.sum(dim=1) / attn_mask.sum(dim=1)
         return embeddings.cpu().numpy()
 
     @requests
-    def encode(self, docs: "DocumentArray", *args, **kwargs):
-        import torch
-
-        with torch.no_grad():
-
+    def encode(self, docs: 'DocumentArray', **kwargs):
+        with torch.inference_mode():
             if not self.tokenizer.pad_token:
-                self.tokenizer.add_special_tokens({"pad_token": "[PAD]"})
+                self.tokenizer.add_special_tokens({'pad_token': '[PAD]'})
                 self.model.resize_token_embeddings(len(self.tokenizer.vocab))
 
             input_tokens = self.tokenizer(
-                docs.get_attributes("content"),
-                max_length=self.max_length,
-                padding="longest",
+                docs[:, 'content'],
+                padding='longest',
                 truncation=True,
-                return_tensors="pt",
+                return_tensors='pt',
             )
             input_tokens = {
-                k: v.to(torch.device("cpu")) for k, v in input_tokens.items()
+                k: v.to(torch.device('cpu')) for k, v in input_tokens.items()
             }
 
-            outputs = getattr(self.model, self.embedding_fn_name)(**input_tokens)
-            if isinstance(outputs, torch.Tensor):
-                return outputs.cpu().numpy()
+            outputs = self.model(**input_tokens)
             hidden_states = outputs.hidden_states
 
-            embeds = self._compute_embedding(hidden_states, input_tokens)
-            for doc, embed in zip(docs, embeds):
-                doc.embedding = embed
+            docs.embeddings = self._compute_embedding(hidden_states, input_tokens)
 
 
 class MyIndexer(Executor):
@@ -104,7 +82,10 @@ class MyIndexer(Executor):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._docs = DocumentArrayMemmap(self.workspace + "/indexer")
+        if os.path.exists(self.workspace + '/indexer'):
+            self._docs = DocumentArray.load(self.workspace + '/indexer')
+        else:
+            self._docs = DocumentArray()
 
     @requests(on="/index")
     def index(self, docs: "DocumentArray", **kwargs):
@@ -150,22 +131,31 @@ class MyIndexer(Executor):
                     if docs_category:
                         docs_filter = docs_category
 
-                a = np.stack(docs.get_attributes("embedding"))
-                b = np.stack(docs_filter.get_attributes("embedding"))
-                q_emb = _ext_A(_norm(a))
-                d_emb = _ext_B(_norm(b))
-                dists = _cosine(q_emb, d_emb)
-                idx, dist = self._get_sorted_top_k(dists, 3)
-                for _q, _ids, _dists in zip(docs, idx, dist):
-                    for _id, _dist in zip(_ids, _dists):
-                        if 1 - _dist > 0.4:
-                            d = Document(docs_filter[int(_id)], copy=True)
-                            d.scores["cosine"] = 1 - _dist
-                            d.tags["uuid"] = message_uuid
-                            d.tags["question"] = d.text
-                            d.tags["answer_html"] = d.tags["answer"].replace("\n", "<br>")
-                            d.pop("embedding")
-                            _q.matches.append(d)
+
+                docs.match(
+                    docs_filter,
+                    metric='cosine',
+                    normalization=(1, 0),
+                    limit=1,
+                )
+
+
+                # a = np.stack(docs.get_attributes("embedding"))
+                # b = np.stack(docs_filter.get_attributes("embedding"))
+                # q_emb = _ext_A(_norm(a))
+                # d_emb = _ext_B(_norm(b))
+                # dists = _cosine(q_emb, d_emb)
+                # idx, dist = self._get_sorted_top_k(dists, 3)
+                # for _q, _ids, _dists in zip(docs, idx, dist):
+                #     for _id, _dist in zip(_ids, _dists):
+                #         if 1 - _dist > 0.4:
+                #             d = Document(docs_filter[int(_id)], copy=True)
+                #             d.scores["cosine"] = 1 - _dist
+                #             d.tags["uuid"] = message_uuid
+                #             d.tags["question"] = d.text
+                #             d.tags["answer_html"] = d.tags["answer"].replace("\n", "<br>")
+                #             d.pop("embedding")
+                #             _q.matches.append(d)
 
         # Log
         try:
