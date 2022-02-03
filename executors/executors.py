@@ -7,7 +7,7 @@ import torch
 from transformers import AutoModel, AutoTokenizer
 
 from jina import Executor, requests
-from docarray import Document, DocumentArray
+from docarray import DocumentArray
 from jina.logging.predefined import default_logger
 
 import db
@@ -22,8 +22,8 @@ class MyTransformer(Executor):
 
     def __init__(
         self,
-        pretrained_model_name_or_path: str = "sentence-transformers/multi-qa-mpnet-base-cos-v1",
-        pooling_strategy: str = "mean",
+        pretrained_model_name_or_path: str = 'sentence-transformers/multi-qa-mpnet-base-cos-v1',
+        pooling_strategy: str = 'mean',
         layer_index: int = -1,
         *args,
         **kwargs,
@@ -62,7 +62,7 @@ class MyTransformer(Executor):
                 self.model.resize_token_embeddings(len(self.tokenizer.vocab))
 
             input_tokens = self.tokenizer(
-                docs[:, 'content'],
+                docs.get_attributes('content'),
                 padding='longest',
                 truncation=True,
                 return_tensors='pt',
@@ -131,31 +131,21 @@ class MyIndexer(Executor):
                     if docs_category:
                         docs_filter = docs_category
 
-
                 docs.match(
                     docs_filter,
                     metric='cosine',
-                    normalization=(1, 0),
-                    limit=1,
+                    normalization=(1, 0.4),
+                    limit=3,
                 )
 
+                docs[0].pop("embedding")
 
-                # a = np.stack(docs.get_attributes("embedding"))
-                # b = np.stack(docs_filter.get_attributes("embedding"))
-                # q_emb = _ext_A(_norm(a))
-                # d_emb = _ext_B(_norm(b))
-                # dists = _cosine(q_emb, d_emb)
-                # idx, dist = self._get_sorted_top_k(dists, 3)
-                # for _q, _ids, _dists in zip(docs, idx, dist):
-                #     for _id, _dist in zip(_ids, _dists):
-                #         if 1 - _dist > 0.4:
-                #             d = Document(docs_filter[int(_id)], copy=True)
-                #             d.scores["cosine"] = 1 - _dist
-                #             d.tags["uuid"] = message_uuid
-                #             d.tags["question"] = d.text
-                #             d.tags["answer_html"] = d.tags["answer"].replace("\n", "<br>")
-                #             d.pop("embedding")
-                #             _q.matches.append(d)
+                if docs.get_attributes("matches"):
+                    for match in docs[0].matches:
+                        match.tags["uuid"] = message_uuid
+                        match.tags["question"] = match.text
+                        match.tags["answer_html"] = match.tags["answer"].replace("\n", "<br>")
+                        match.pop("embedding")
 
         # Log
         try:
@@ -189,52 +179,8 @@ class MyIndexer(Executor):
             db.session.rollback()
             default_logger.error(f'Error: {e}')
 
-    @staticmethod
-    def _get_sorted_top_k(
-        dist: "np.array", top_k: int
-    ) -> Tuple["np.ndarray", "np.ndarray"]:
-        if top_k >= dist.shape[1]:
-            idx = dist.argsort(axis=1)[:, :top_k]
-            dist = np.take_along_axis(dist, idx, axis=1)
-        else:
-            idx_ps = dist.argpartition(kth=top_k, axis=1)[:, :top_k]
-            dist = np.take_along_axis(dist, idx_ps, axis=1)
-            idx_fs = dist.argsort(axis=1)
-            idx = np.take_along_axis(idx_ps, idx_fs, axis=1)
-            dist = np.take_along_axis(dist, idx_fs, axis=1)
-
-        return idx, dist
-
-
-def _get_ones(x, y):
-    return np.ones((x, y))
-
-
-def _ext_A(A):
-    nA, dim = A.shape
-    A_ext = _get_ones(nA, dim * 3)
-    A_ext[:, dim : 2 * dim] = A
-    A_ext[:, 2 * dim :] = A ** 2
-    return A_ext
-
-
-def _ext_B(B):
-    nB, dim = B.shape
-    B_ext = _get_ones(dim * 3, nB)
-    B_ext[:dim] = (B ** 2).T
-    B_ext[dim : 2 * dim] = -2.0 * B.T
-    del B
-    return B_ext
-
-
-def _euclidean(A_ext, B_ext):
-    sqdist = A_ext.dot(B_ext).clip(min=0)
-    return np.sqrt(sqdist)
-
-
-def _norm(A):
-    return A / np.linalg.norm(A, ord=2, axis=1, keepdims=True)
-
-
-def _cosine(A_norm_ext, B_norm_ext):
-    return A_norm_ext.dot(B_norm_ext).clip(min=0) / 2
+    def close(self):
+        """
+        Stores the DocumentArray to disk
+        """
+        self._docs.save(self.workspace + '/indexer')
