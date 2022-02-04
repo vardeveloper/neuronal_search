@@ -179,8 +179,8 @@ class MyIndexer(Executor):
             db.session.rollback()
             default_logger.error(f'Error: {e}')
 
-    def close(self):
-        """
-        Stores the DocumentArray to disk
-        """
-        self._docs.save(self.workspace + '/indexer')
+    # def close(self):
+    #     """
+    #     Stores the DocumentArray to disk
+    #     """
+    #     self._docs.save(self.workspace + '/indexer')
