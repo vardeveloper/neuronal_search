@@ -1,7 +1,7 @@
-jina==2.5.*
-torch==1.10.0
-transformers==4.12.5
-psycopg2-binary==2.9.2
-SQLAlchemy==1.4.27
+jina==2.6.*
+torch==1.10.*
+transformers==4.16.*
+psycopg2-binary==2.9.*
+SQLAlchemy==1.4.*
 wordcloud==1.8.1
-nltk==3.6.5
+nltk==3.6.*
