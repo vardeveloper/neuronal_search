@@ -15,7 +15,9 @@ from sqlalchemy import (
     ForeignKey,
 )
 
-import db
+# from db import Base, engine
+from db.base_class import Base
+from db.session import engine
 
 
 time_zone = tz.gettz("America/Lima")
@@ -26,7 +28,7 @@ def _uuid4():
     return str(uuid4())
 
 
-class Feedback(db.Base):
+class Feedback(Base):
     __tablename__ = "feedback"
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
@@ -47,7 +49,7 @@ class Feedback(db.Base):
         return self.uuid
 
 
-class Log(db.Base):
+class Log(Base):
     __tablename__ = "log"
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
@@ -80,7 +82,7 @@ class Log(db.Base):
         return self.uuid
 
 
-class QuestionAnswer(db.Base):
+class QuestionAnswer(Base):
     __tablename__ = "question_answer"
 
     id = Column(BigInteger, primary_key=True, autoincrement=True)
@@ -106,6 +108,15 @@ class QuestionAnswer(db.Base):
         return self.uuid
 
 
+class User(Base):
+    id = Column(Integer, primary_key=True, index=True)
+    full_name = Column(String, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    is_active = Column(Boolean(), default=True)
+    is_superuser = Column(Boolean(), default=False)
+
+
 def run():
     # feedback = Feedback('Python', 'Hello world', True)
     # db.session.add(feedback)
@@ -116,5 +127,5 @@ def run():
 
 
 if __name__ == "__main__":
-    db.Base.metadata.create_all(db.engine)
+    Base.metadata.create_all(engine)
     run()

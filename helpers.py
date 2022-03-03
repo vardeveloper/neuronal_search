@@ -4,7 +4,7 @@ import json
 import re
 import unicodedata
 
-import db
+from db.session import SessionLocal
 from models import QuestionAnswer, Log
 from sqlalchemy import desc, func
 
@@ -15,6 +15,8 @@ from wordcloud import WordCloud, STOPWORDS
 
 _slugify_strip_re = re.compile(r"[^\w\s-]")
 _slugify_hyphenate_re = re.compile(r"[-\s]+")
+
+db = SessionLocal()
 
 
 def _slugify(value):
@@ -84,15 +86,15 @@ def save_dataset(business):
         csvReader = csv.DictReader(csvf)
         for rows in csvReader:
             try:
-                qa = db.session.query(QuestionAnswer).filter_by(business=rows["business"], question=rows["question"]).first()
+                qa = db.query(QuestionAnswer).filter_by(business=rows["business"], question=rows["question"]).first()
                 if qa:
                     print(f'This question already exists: {qa.question}')
                     continue
                 qa = QuestionAnswer(**rows)
-                db.session.add(qa)
-                db.session.commit()
+                db.add(qa)
+                db.commit()
             except Exception as e:
-                db.session.rollback()
+                db.rollback()
                 print(f'Error: {e}')
 
 
@@ -101,7 +103,7 @@ def generate_search_terms_file(business, date_start, date_end):
     with open(dataset, "w", encoding="utf-8") as f:
         try:
             search = (
-                db.session.query(func.lower(Log.search).label('search'))
+                db.query(func.lower(Log.search).label('search'))
                 .filter(
                     Log.business == business,
                     Log.created_at.between(date_start, date_end),
