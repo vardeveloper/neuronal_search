@@ -132,7 +132,7 @@ def endpoints(app):
 
 
     @app.put("/user/{user_id}", response_model=schemas.User, tags=["users"])
-    def update_user(
+    def update_user_by_id(
         *,
         db: Session = Depends(deps.get_db),
         user_id: int,
@@ -140,7 +140,7 @@ def endpoints(app):
         current_user: models.User = Depends(deps.get_current_active_superuser),
     ) -> Any:
         """
-        Update a user.
+        Update a user by id.
         """
         user = crud.user.get(db, id=user_id)
         if not user:
