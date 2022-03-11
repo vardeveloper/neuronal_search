@@ -55,4 +55,24 @@ def endpoints(app):
             )
         return customer
 
+    @app.put("/customer/{customer_id}", response_model=schemas.Customer, tags=["customers"])
+    def update_customer_by_id(
+        *,
+        db: Session = Depends(deps.get_db),
+        customer_id: int,
+        customer_in: schemas.CustomerUpdate,
+        current_user: models.User = Depends(deps.get_current_active_superuser),
+    ) -> Any:
+        """
+        Update a customer by id.
+        """
+        customer = crud.customer.get(db, id=customer_id)
+        if not customer:
+            raise HTTPException(
+                status_code=404,
+                detail="The customer with this id does not exist in the system",
+            )
+        customer = crud.customer.update(db, db_obj=customer, obj_in=customer_in)
+        return customer
+
     return app
