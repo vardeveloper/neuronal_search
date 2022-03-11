@@ -1,6 +1,8 @@
 import os
 import json
 
+from fastapi import File, UploadFile, Form
+
 from db.session import SessionLocal
 from schemas import Feedback, Category, Log, Business
 from models import Feedback as Model_Feedback, QuestionAnswer, Log as Model_Log
@@ -133,5 +135,21 @@ def endpoints(app):
             return dict(status=False, message=str(e))
         else:
             return dict(status=True, data=body)
+
+    @app.post('/load_data', tags=["documents"])
+    async def load_dataset(file: UploadFile = File(...), customer_code: str = Form(...)):
+        try:
+            text = await file.read()
+            fname = customer_code + ".csv"
+            dirs = "dataset"
+            if not os.path.exists(dirs):
+                os.makedirs(dirs)
+            fname_path = os.path.join(os.getcwd(), os.path.join(dirs, fname))
+            with open(fname_path, 'wb') as f:
+                f.write(text)
+            
+            return {'status': True, 'message': f"Successfully loaded dataset"}, 200
+        except Exception as e:
+            return {'status': False, 'message': e}, 400
 
     return app
