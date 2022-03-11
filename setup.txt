@@ -32,6 +32,7 @@ process_name = %(program_name)s
 directory = /home/user_distro/projects/seeker-jina-lucca/
 command = /bin/bash start.bash
 # command = python3 app.py --workdir data
+stopasgroup = true
 autostart = true
 autorestart = true
 stdout_logfile = /var/log/jina.out.log
