@@ -117,6 +117,20 @@ class User(Base):
     is_superuser = Column(Boolean(), default=False)
 
 
+class Customer(Base):
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    logo = Column(String)
+    code = Column(String, unique=True, index=True, nullable=False)
+    is_active = Column(Boolean(), default=True)
+
+
+class Dataset(Base):
+    id = Column(Integer, primary_key=True, index=True)
+    file = Column(String)
+    customer_code = Column(String, unique=True, index=True, nullable=False)
+
+
 def run():
     # feedback = Feedback('Python', 'Hello world', True)
     # db.session.add(feedback)

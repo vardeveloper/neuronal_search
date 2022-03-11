@@ -76,3 +76,35 @@ class TokenPayload(BaseModel):
 
 class Msg(BaseModel):
     msg: str
+
+
+class CustomerBase(BaseModel):
+    name: Optional[str] = None
+    code: Optional[str] = None
+    is_active: Optional[bool] = True
+
+
+class CustomerCreate(CustomerBase):
+    name: str
+    code: str
+
+
+class CustomerUpdate(CustomerBase):
+    pass
+
+
+class CustomerInDBBase(CustomerBase):
+    id: Optional[int] = None
+
+    class Config:
+        orm_mode = True
+
+
+# Additional properties to return via API
+class Customer(CustomerInDBBase):
+    pass
+
+
+class DatasetBase(BaseModel):
+    file: str
+    customer_code: str
