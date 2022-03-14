@@ -47,7 +47,7 @@ if ($response === FALSE) {
 curl_close($ch);
 
 // HEADERS
-header("Access-Control-Allow-Origin: *"); // CORS
+//header("Access-Control-Allow-Origin: *"); // CORS
 header("Access-Control-Allow-Headers: *"); // CORS
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS"); // CORS
 header('Content-Type: application/json; charset=utf-8');

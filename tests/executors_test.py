@@ -29,7 +29,7 @@ class MyExec(Executor):
     def foo(self, docs, **kwargs):
         # for d in docs:
         #     d.text = "hello world"
-        add_row_dataset(docs)
+        add_row_dataset(docs, 'CNSC')
         print()
 
 
