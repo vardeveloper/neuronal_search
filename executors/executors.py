@@ -10,7 +10,7 @@ from jina import Executor, requests
 from docarray import DocumentArray
 from jina.logging.predefined import default_logger
 
-import db
+from db.session import SessionLocal
 from models import Log, QuestionAnswer
 from helpers import add_tag_html, add_row_dataset
 
@@ -98,17 +98,18 @@ class MyIndexer(Executor):
         if "business" in parameters:
             add_row_dataset(docs, parameters["business"].strip().lower())
 
+        db = SessionLocal()
         for doc in docs:
             try:
-                qa = db.session.query(QuestionAnswer).filter_by(business=doc.tags["business"], question=doc.text).first()
+                qa = db.query(QuestionAnswer).filter_by(business=doc.tags["business"], question=doc.text).first()
                 if qa:
                     default_logger.error(f'This question already exists: {qa.question}')
                     continue
                 qa = QuestionAnswer(**doc.tags)
-                db.session.add(qa)
-                db.session.commit()
+                db.add(qa)
+                db.commit()
             except Exception as e:
-                db.session.rollback()
+                db.rollback()
                 default_logger.error(f'Error: {e}')
 
     @requests(on="/search")
@@ -148,6 +149,7 @@ class MyIndexer(Executor):
                         match.pop("embedding")
 
         # Log
+        db = SessionLocal()
         try:
             question = ""
             answer = ""
@@ -173,10 +175,10 @@ class MyIndexer(Executor):
             }
 
             log = Log(**data)
-            db.session.add(log)
-            db.session.commit()
+            db.add(log)
+            db.commit()
         except Exception as e:
-            db.session.rollback()
+            db.rollback()
             default_logger.error(f'Error: {e}')
 
     # def close(self):
