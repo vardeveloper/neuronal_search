@@ -60,7 +60,7 @@ def run(args):
                         DocumentArray.from_csv(fp, field_resolver={"question": "text"}),
                         show_progress=True
                     )
-                break
+                # break
             f.block()
 
     if os.getenv("DATASET_SOURCE") == "DB":
