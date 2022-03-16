@@ -13,12 +13,12 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS"); // CORS
 header('Content-Type: application/json; charset=utf-8');
 
 // validate API KEY
-$API_KEY = "bbf9537bc4b6b0a40c6665967cb9f759620cd611";
-$headers = getallheaders();
-if (base64_decode($headers["API_KEY"]) != $API_KEY) {
-    echo json_encode(array('status' => FALSE, 'message' => 'El API_KEY es incorrecto'));
-    exit();
-}
+// $API_KEY = "bbf9537bc4b6b0a40c6665967cb9f759620cd611";
+// $headers = getallheaders();
+// if (base64_decode($headers["API_KEY"]) != $API_KEY) {
+//     echo json_encode(array('status' => FALSE, 'message' => 'El API_KEY es incorrecto'));
+//     exit();
+// }
 
 // remove path 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
