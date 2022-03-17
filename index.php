@@ -23,7 +23,7 @@ header('Content-Type: application/json; charset=utf-8');
 // remove path 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = str_replace("/apisearch/index.php/", "", $path);
-$path = str_replace("/", "", $path);
+//$path = str_replace("/", "", $path);
 
 // get data of body
 if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0 ||
@@ -44,10 +44,16 @@ $url = "http://10.128.0.17:8000/$path";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 
+$authorization = '';
+$headers = getallheaders();
+if ($headers["Authorization"]) {
+    $authorization = 'Authorization: ' . $headers["Authorization"];
+}
+
 if (strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') == 0) {
     $headers = getallheaders();
     if ($headers["Authorization"]) {
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: ' . $headers["Authorization"], 'Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization, 'Content-Type: application/json'));
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);
     }
 }
@@ -58,7 +64,7 @@ if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, array('username' => $_POST['username'], 'password' => $_POST['password']));
     } else {
         $payload = json_encode($data_array);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization, 'Content-Type: application/json'));
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
     }
@@ -66,7 +72,7 @@ if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0) {
 
 if (strcasecmp($_SERVER['REQUEST_METHOD'], 'PUT') == 0) {
     $payload = json_encode($data_array);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($payload)));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization, 'Content-Type: application/json', 'Content-Length: ' . strlen($payload)));
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 }
