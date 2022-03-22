@@ -10,6 +10,9 @@ from helpers import generate_search_terms_file, generate_wordcloud
 def endpoints(app):
     @app.post("/report_top_question", tags=["reports"])
     def report_top_question(log: Question_Answer):
+        """
+        gets the most searched questions
+        """
         try:
             db = SessionLocal()
             rows = (
@@ -44,6 +47,9 @@ def endpoints(app):
 
     @app.post("/report_top_category", tags=["reports"])
     def report_top_category(log: Question_Answer):
+        """
+        gets the most searched categories
+        """
         try:
             db = SessionLocal()
             rows = (
@@ -76,6 +82,9 @@ def endpoints(app):
 
     @app.post("/report_top_feedback", tags=["reports"])
     def report_top_feedback(log: Question_Answer):
+        """
+        gets a list of the rated questions sorted from highest to lowest
+        """
         try:
             db = SessionLocal()
             sub_query = (
@@ -115,6 +124,9 @@ def endpoints(app):
 
     @app.post("/top_words", tags=["reports"])
     def top_words(qa: Question_Answer):
+        """
+        gets a list of the most repeated words
+        """
         try:
             generate_search_terms_file(qa.business.lower(), qa.date_start, qa.date_end)
             top_words = generate_wordcloud(qa.business.lower(), qa.limit)

@@ -12,6 +12,9 @@ from helpers import make_categories_json, save_dataset
 def endpoints(app):
     @app.post("/feedback", tags=["documents"])
     def create_feedback(feedback: Feedback):
+        """
+        Rate a question obtained by search
+        """
         db = SessionLocal()
         row = (
             db.query(Model_Feedback)
@@ -33,6 +36,9 @@ def endpoints(app):
 
     @app.post("/categories", tags=["documents"])
     def get_categories(category: Category):
+        """
+        gets all the categories of a specific dataset
+        """
         category_json = os.path.join("dataset", category.business.lower() + ".json")
         if os.path.isfile(category_json):
             with open(category_json) as f:
@@ -42,6 +48,9 @@ def endpoints(app):
 
     @app.post("/categories_generate", tags=["documents"])
     def generate_categories(category: Category):
+        """
+        generate a json file with all categories
+        """
         try:
             dataset = os.path.join("dataset", category.business.lower() + ".csv")
             if not os.path.isfile(dataset):
@@ -57,6 +66,9 @@ def endpoints(app):
 
     @app.post("/save_dataset", tags=["documents"])
     def dataset_save(category: Category):
+        """
+        saves a dataset to the database
+        """
         try:
             dataset = os.path.join("dataset", category.business.lower() + ".csv")
             if not os.path.isfile(dataset):
@@ -72,6 +84,9 @@ def endpoints(app):
 
     @app.post("/get_question_answer", tags=["documents"])
     def get_question_answer(business: Business):
+        """
+        gets the questions and answers from the database
+        """
         try:
             db = SessionLocal()
             rows = (
@@ -103,6 +118,9 @@ def endpoints(app):
 
     @app.post("/get_log", tags=["documents"])
     def get_log(log: Log):
+        """
+        gets the logs of the searches filtered by dates
+        """
         try:
             db = SessionLocal()
             rows = (
@@ -138,6 +156,9 @@ def endpoints(app):
 
     @app.post('/load_data', tags=["documents"])
     async def load_dataset(file: UploadFile = File(...), customer_code: str = Form(...)):
+        """
+        Upload a dataset to the local repository
+        """
         try:
             text = await file.read()
             fname = customer_code + ".csv"
